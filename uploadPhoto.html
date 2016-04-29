@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-    
-    
-</body>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type ="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <title>Upload photo</title>
+    </head>
+    <body>   
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal">Open</button>
+        <div class="modal fade" id="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header center-text">
+                        <h4 class="modal-title"><h2>Uploaded new photo</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">    
+                            <input type="file" id="inputFile">
+                        </div>
+                        <div class = "form-group center-text" >
+                            <label for="namephoto" ><h3>Describe your photos</h3></label>
+                            <textarea class="form-control" rows="3" ></textarea>
+                        </div>
+                        <select class="form-control">
+                            <option disabled>Choose your category</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <div class = "checkbox">
+                            <div>
+                                <label class="label-inline" >
+                                    <input type="checkbox" >Tagged this photo with your friends
+                                </label>
+                                <label class="label-inline">
+                                    <input type="checkbox" >Create this photo private
+                                </label>
+                            </div>
+                            <div >
+                                <button type="button" class="btn btn-primary">Send your photo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

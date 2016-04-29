@@ -1,0 +1,16 @@
+.label-inline{
+    display: block;
+}
+
+.checkbox div:first-child{
+    float:left;
+}
+
+.checkbox div:last-child{
+    float:right;
+}
+
+.center-text{
+      text-align: center; 
+}
+
