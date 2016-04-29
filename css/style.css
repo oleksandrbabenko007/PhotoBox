@@ -14,3 +14,65 @@
       text-align: center; 
 }
 
+=======
+header .top-line {
+    padding: 20px 0;
+}
+.logo {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.slogan {
+    color: #666;
+    font-size: 20px;
+}
+
+.top-user-info {
+    padding: 15px 0;
+
+}
+
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #999;
+    padding: 10px 0;
+}
+
+/*.user-main-photo {
+    height: 100%;
+    float: left;
+    margin-right: 20px;
+    overflow: hidden;
+    text-align: center;
+}*/
+.user-main-photo img {
+    border-radius: 50%; 
+}
+
+.user-main-photo img,
+.image-item img  {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.list-of-photo {
+
+}
+.photo-item {
+    max-height: 150px;
+    display: inline-block;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 10px;
+}
+.photo-item a {
+    display: block;
+    
+}
