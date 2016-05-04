@@ -1,122 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+  <meta charset="UTF-8">
+  <title>PhotoBox - user page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
-    <header>
-        <div class="container-fluid">
-            <div class="row top-line">
-                <div class="col-md-12">
-                    <div class="logo">Photo Box</div>
-                    <div class="slogan">A new way to be creative</div>
-                </div>
-            </div>
-        </div>
+  <div class="container-fluid">
+
+    <header class="row">
+      <div class="col-xs-12">
+        <h1 class="logo"><a href="#">
+          <img src="image/logo.png" alt="" class="logo-img img-responsive" >
+          Photo Box
+        </a></h1>
+        <h4 class="gray666"><i>A new way to be creative</i></h4>
+      </div>
     </header>
 
     <div class="content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 top-user-info">
-                    <div class="col-xs-2 col-sm-2 col-md-2 user-main-photo">
-                        <img src="image/1k-UKTeDmGI.jpg" class="img-rounded" alt="">
-                    </div>
-                    <div class="col-xs-10 col-sm-6 col-md-7 user-name">
-                        Nataly Stuchinska
-                    </div>
-                    <div class="col-xs-12 col-sm-3 col-md-2">
-                       <button type="button" class="btn btn-block btn-lg btn-success" data-toggle="modal" data-target="#modal">Add photo</button>
-                   </div>
-               </div>
 
+      <div class="row top-user-info">
+        <div class="col-xs-2">
+          <img src="image/1k-UKTeDmGI.jpg" class="img-responsive img-circle" alt="">
+        </div>
+        <div class="col-xs-10 col-sm-7">
+          <h2 class="gray666"><strong>Nataly Stuchinska</strong></h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus in, eum deleniti magnam velit aspernatur, impedit odio officiis nemo similique expedita consequatur iusto suscipit. Nihil, ut quis saepe repellendus iste.</p>
+        </div>
 
-               <div class="col-xs-12 col-sm-12 col-md-12 list-of-photos">
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/8fa7KMFG66A.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/2rSK30-ZeY4.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/ABlPLpxJ1vE.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/1k-UKTeDmGI.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/B0wi50-z80I.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/CaMdfZpq-EY.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/CaMdfZpq-EY.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/E9NghNcycm4.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/eFv3tZTzq1E.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/EWCpGHJh3Dk.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/FGdkrvuKi0A.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/8fa7KMFG66A.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/2rSK30-ZeY4.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/ABlPLpxJ1vE.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/1k-UKTeDmGI.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/B0wi50-z80I.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/CaMdfZpq-EY.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/CaMdfZpq-EY.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/E9NghNcycm4.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/eFv3tZTzq1E.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/EWCpGHJh3Dk.jpg" alt=""></a></div>
-                   <div class="col-sm-3 col-md-2 photo-item"><a href="#" class="image-item"><img src="image/FGdkrvuKi0A.jpg" alt=""></a></div>
-               </div>
-           </div>
-       </div>
+        <div class="col-xs-12 col-sm-3">
+          <button type="button" class="btn btn-block btn-lg btn-success" data-toggle="modal" data-target="#modal">Add photo</button>
+        </div>
+      </div>
+
+      <div class="row image-list center-block">
+        <a href="#" class="thumbnail"><img src="image/8fa7KMFG66A.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/2rSK30-ZeY4.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/ABlPLpxJ1vE.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/1k-UKTeDmGI.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/B0wi50-z80I.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/CaMdfZpq-EY.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/CaMdfZpq-EY.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/E9NghNcycm4.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/eFv3tZTzq1E.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/EWCpGHJh3Dk.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/FGdkrvuKi0A.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/8fa7KMFG66A.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/2rSK30-ZeY4.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/ABlPLpxJ1vE.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/1k-UKTeDmGI.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/B0wi50-z80I.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/CaMdfZpq-EY.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/CaMdfZpq-EY.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/E9NghNcycm4.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/eFv3tZTzq1E.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/EWCpGHJh3Dk.jpg" class="img-responsive" alt=""></a>
+        <a href="#" class="thumbnail"><img src="image/FGdkrvuKi0A.jpg" class="img-responsive" alt=""></a>
+      </div>
     </div>
 
     <footer>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                   2016 Copyright by ...
-               </div>
-               <div class="col-md-9">
-
-               </div>
-           </div>
-       </div>
-   </footer>
-
-
-   <div class="modal fade" id="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header center-text">
-                    <h4 class="modal-title"><h2>Uploaded new photo</h2>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">    
-                        <input type="file" id="inputFile">
-                    </div>
-                    <div class = "form-group center-text" >
-                        <label for="namephoto" ><h3>Describe your photos</h3></label>
-                        <textarea class="form-control" rows="3" ></textarea>
-                    </div>
-                    <select class="form-control">
-                        <option disabled>Choose your category</option>
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <div class = "checkbox">
-                        <div>
-                            <label class="label-inline" >
-                                <input type="checkbox" >Tagged this photo with your friends
-                            </label>
-                            <label class="label-inline">
-                                <input type="checkbox" >Create this photo private
-                            </label>
-                        </div>
-                        <div >
-                            <button type="button" class="btn btn-primary">Send your photo</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="row">
+        <div class="col-xs-3">
+          2016 Copyright by ...
         </div>
+      </div>
+    </footer>
+
+  </div>   <!-- container-fluid -->
+
+
+
+  <div class="modal fade" id="modal">
+    <div class="modal-dialog">    
+      <div class="modal-content">
+        <div class="modal-header center-text">
+          <h4 class="modal-title"><h2>Uploaded new photo</h2>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">    
+              <input type="file" id="inputFile">
+            </div>
+            <div class = "form-group center-text" >
+              <label for="namephoto" ><h3>Describe your photos</h3></label>
+              <textarea class="form-control" rows="3" ></textarea>
+            </div>
+            <select class="form-control">
+              <option disabled>Choose your category</option>
+            </select>
+            <div class = "checkbox">
+              <label class="checkbox" >
+                <input type="checkbox" >Tagged this photo with your friends
+              </label>
+              <label class="checkbox">
+                <input type="checkbox" >Create this photo private
+              </label>
+            </div>
+          </div>
+          <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-primary">Send your photo</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-</body>
-</html>
+  </body>
+  </html>
