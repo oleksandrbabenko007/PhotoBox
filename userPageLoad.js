@@ -16,6 +16,5 @@ function logImages(res) {
         link = $('<a href="' + res[i].src + '" class="thumbnail"></a>').appendTo(galery);
         link.append('<img src="' + res[i].src + '" class="img-responsive">');
         link.append('<div class="caption">' + res[i].descr + '</div>');
-        // galery.append('<a href="' + res[i].src + '" class="thumbnail"><img src="' + res[i].src + '" class="img-responsive"></a>');
     }
 }
