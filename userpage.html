@@ -56,7 +56,7 @@
     </div>   <!-- container-fluid -->
 
 
-
+<form class="form-signin" action="/modalWindow" method="POST">
     <div class="modal fade" id="modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -65,30 +65,34 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="file" id="inputFile">
+                        <input type="file" name="inputFile">
                     </div>
                     <div class = "form-group center-text" >
                         <label for="namephoto" ><h3>Describe your photo</h3></label>
-                        <textarea class="form-control" rows="3" ></textarea>
+                        <textarea class="form-control" rows="3" name="fotoDescribe" ></textarea>
                     </div>
-                    <select class="form-control">
+                    <select class="form-control" name = "categoryName">
                         <option disabled>Choose your category</option>
+                        <option >category1</option>
+                        <option >category2</option>
+                        <option >category3</option>
+                        <option >category4</option>
+                        <option >category5</option>
                     </select>
                     <div class = "checkbox">
-                        <label class="checkbox" >
-                            <input type="checkbox" >Tagged this photo with your friends
-                        </label>
                         <label class="checkbox">
-                            <input type="checkbox" >Create this photo private
+                            <input type="checkbox" id="privateFoto" name="privateFoto" > Create this photo private
                         </label>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Send your photo</button>
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+                    <button id="closemodal" type="submit" class="btn btn-primary" >Send your photo</button>
                 </div>
             </div>
         </div>
     </div>
+    </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

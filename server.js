@@ -18,20 +18,36 @@ app.post('/login', urlencodedParser, function(req, res) {
         login: req.body.inputLogin,
         password: req.body.inputPassword
     };
-
     if (isUser(user, users)) {
         req.session.user = user;
 
         loggedUser = JSON.stringify(users[user.login]);
         loggedUser = JSON.parse(loggedUser);
         delete loggedUser.password;
-        console.log(loggedUser);
+        // console.log(loggedUser);
 
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
     }
     res.end(JSON.stringify(user));
+});
+
+app.post('/modalWindow', urlencodedParser, function(req, res) {
+    var checked;
+    if (req.body.privateFoto) {
+        checked = true;
+    } else {
+        checked = false;
+    }
+    var newPhoto = {
+        srcFile: req.body.inputFile,
+        foto: req.body.fotoDescribe,
+        category: req.body.categoryName,
+        private: checked
+    };
+    res.redirect('/userpage.html');
+    console.log(newPhoto);
 });
 
 // This responds a GET request for the /userpage.
@@ -43,6 +59,7 @@ app.get('/user_page', function(req, res) {
     res.send(loggedUser);
     // res.send({fhotos: ['one.jspg', 'two.jpg']});
 });
+
 
 app.get('/logout', function(req, res) {
     req.session.reset();
