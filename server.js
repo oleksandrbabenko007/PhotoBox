@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
+var fs = require('fs');
 var app = express();
 var loggedUser;
 var urlencodedParser = bodyParser.urlencoded({extended: false});
@@ -18,13 +19,13 @@ app.post('/login', urlencodedParser, function(req, res) {
         login: req.body.inputLogin,
         password: req.body.inputPassword
     };
+
     if (isUser(user, users)) {
         req.session.user = user;
 
         loggedUser = JSON.stringify(users[user.login]);
         loggedUser = JSON.parse(loggedUser);
         delete loggedUser.password;
-        // console.log(loggedUser);
 
         res.redirect('/userpage.html');
     } else {
@@ -40,14 +41,25 @@ app.post('/modalWindow', urlencodedParser, function(req, res) {
     } else {
         checked = false;
     }
+    var srcPhoto = String('users_images/' + req.session.user.login + '/' + req.body.inputFile);
+    console.log(srcPhoto);
     var newPhoto = {
-        srcFile: req.body.inputFile,
-        foto: req.body.fotoDescribe,
+        src: srcPhoto,
+        descr: req.body.fotoDescribe,
         category: req.body.categoryName,
         private: checked
     };
+    var images = require('.' + loggedUser.images);
+    images.push(newPhoto);
+    fs.writeFile('.' + loggedUser.images, JSON.stringify(images), function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Файл сохранен.");
+        }
+    });
     res.redirect('/userpage.html');
-    console.log(newPhoto);
+    res.end('okay');
 });
 
 // This responds a GET request for the /userpage.
@@ -56,10 +68,9 @@ app.get('/user_page', function(req, res) {
         res.send({error: 'not logged in'});
         return;
     }
-    res.send(loggedUser);
-    // res.send({fhotos: ['one.jspg', 'two.jpg']});
-});
 
+    res.send(loggedUser);
+});
 
 app.get('/logout', function(req, res) {
     req.session.reset();

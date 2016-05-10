@@ -13,7 +13,7 @@ function logImages(res) {
     var galery = $('.image-list');
     var link;
     for (var i = 0; i < res.length; i++) {
-        link = $('<a href="' + res[i].src + '" class="thumbnail"></a>').appendTo(galery);
+        link = $('<a>', {href: res[i].src, class: "thumbnail"}).appendTo(galery);
         link.append('<img src="' + res[i].src + '" class="img-responsive">');
         link.append('<div class="caption">' + res[i].descr + '</div>');
     }
