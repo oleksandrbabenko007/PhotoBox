@@ -1,0 +1,23 @@
+{
+  "name": "stop-watch-nata",
+  "version": "1.0.0",
+  "description": "Stopwatch",
+  "main": "index.html",
+  "devDependencies": {
+      "eslint": "^2.8.0",
+      "eslint-config-google": "^0.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natahin/Stopwatch.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natahin/Stopwatch/issues"
+  },
+  "homepage": "https://github.com/natahin/Stopwatch#readme"
+}

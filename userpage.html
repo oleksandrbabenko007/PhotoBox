@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PhotoBox - user page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+    <div class="container-fluid">
+
+        <header class="row">
+            <div class="col-xs-11">
+                <h1 class="logo"><a href="#">
+                    <img src="image/logo.png" alt="" class="logo-img img-responsive" >
+                    Photo Box
+                </a></h1>
+                <h4 class="gray666"><i>A new way to be creative</i></h4>
+            </div>
+            <div class="col-xs-1">
+                <a href="/logout">Log out</a>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+
+            <div class="row top-user-info">
+                <div class="col-xs-2 avatar">
+                    <!-- <img src="image/1k-UKTeDmGI.jpg" class="img-responsive img-circle" alt=""> -->
+                </div>
+                <div class="col-xs-10 col-sm-7">
+                    <h2 class="gray666 username"><strong></strong></h2>
+                    <p class="status"></p>
+                </div>
+
+                <div class="col-xs-12 col-sm-3">
+                    <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
+                </div>
+            </div>
+
+            <div class="row image-list center-block">
+<!--            <a href="#" class="thumbnail"><img src="image/8fa7KMFG66A.jpg" class="img-responsive" alt=""></a> -->
+            </div>
+        </div>
+
+        <footer>
+            <div class="row">
+                <div class="col-xs-3">
+                    2016 Copyright by ...
+                </div>
+            </div>
+        </footer>
+
+    </div>   <!-- container-fluid -->
+
+
+
+    <div class="modal fade" id="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header center-text">
+                    <h2>Uploaded new photo</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="file" id="inputFile">
+                    </div>
+                    <div class = "form-group center-text" >
+                        <label for="namephoto" ><h3>Describe your photo</h3></label>
+                        <textarea class="form-control" rows="3" ></textarea>
+                    </div>
+                    <select class="form-control">
+                        <option disabled>Choose your category</option>
+                    </select>
+                    <div class = "checkbox">
+                        <label class="checkbox" >
+                            <input type="checkbox" >Tagged this photo with your friends
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" >Create this photo private
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Send your photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="userPageLoad.js"></script>
+</body>
+</html>
