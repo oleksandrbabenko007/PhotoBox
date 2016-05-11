@@ -12,7 +12,8 @@
     "body-parser": "*",
     "cookie-parser": "*",
     "client-sessions": "*",
-    "connect-busboy" : "*"
+    "connect-busboy" : "*",
+    "mkdirp" : "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
