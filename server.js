@@ -5,10 +5,15 @@ var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
 var fs = require('fs');
+
+var http = require('http'),
+    inspect = require('util').inspect;
+
 var app = express();
 var loggedUser;
 var busboy = require('connect-busboy');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
+
 app.use(busboy()); 
 app.use(cookieParser());
 app.use(session({
@@ -40,20 +45,23 @@ app.post('/fileupload', function(req, res) {
     var fstream;
     var userSession = req.session.user;
     req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename, val) {
-        console.log("Uploading--> " + filename); 
+    req.busboy.on('file', function(fieldname, file, filename, val) {
+        console.log("Uploading--> " + filename);
         console.log("val-->" + val);
         console.log("file -->" + file);
         console.log("fieldName-->" + fieldname);
+        var path = __dirname + '/users_images/' + userSession.login + "/" + filename;
         console.log(path);
-        var path = __dirname + '/users_images/' + userSession.login + "/" +filename;
         fstream = fs.createWriteStream(path);
-        file.pipe(fstream);      
-        fstream.on('close', function () {
+        file.pipe(fstream);
+        fstream.on('close', function() {
             res.redirect('/userpage.html');
         });
     });
-
+    req.busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+        console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+    });
+});
 
 app.post('/modalWindow', urlencodedParser, function(req, res) {
     var images = require('.' + loggedUser.images);
@@ -106,12 +114,12 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
     res.send({status: 'okay'});
 });
 
-// This responds a GET request for the /userpage.
+
 app.get('/user_page', function(req, res) {
     if (!req.session.user) {
         res.send({error: 'not logged in'});
         return;
-    }
+    };
     res.send(loggedUser);
 });
 
@@ -132,4 +140,4 @@ function isUser(user, users) {
         return false;
     }
     return user.password === users[user.login].password;
-}
+};
