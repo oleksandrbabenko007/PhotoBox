@@ -47,6 +47,7 @@ header {
 }
 .thumbnail {
     display: inline-block;
+    position: relative;
 }
 @media (min-width: 450px) {
     .image-list {
@@ -107,4 +108,11 @@ header {
 }
 #error {
     display: none;
+}
+
+.glyphicon-remove {
+    padding: 10px;
+    color: red;
+    cursor: pointer;
+    float: right;
 }

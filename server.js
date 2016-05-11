@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
+var fs = require('fs');
 var app = express();
 var loggedUser;
 var busboy = require('connect-busboy');
@@ -21,12 +22,12 @@ app.post('/login', urlencodedParser, function(req, res) {
         login: req.body.inputLogin,
         password: req.body.inputPassword
     };
+
     if (isUser(user, users)) {
         req.session.user = user;
         loggedUser = JSON.stringify(users[user.login]);
         loggedUser = JSON.parse(loggedUser);
         delete loggedUser.password;
-        // console.log(loggedUser);
 
         res.redirect('/userpage.html');
     } else {
@@ -55,20 +56,54 @@ app.post('/fileupload', function(req, res) {
 
 
 app.post('/modalWindow', urlencodedParser, function(req, res) {
+    var images = require('.' + loggedUser.images);
+
     var checked;
     if (req.body.privateFoto) {
         checked = true;
     } else {
         checked = false;
     }
+    var srcPhoto = String('/users_images/' + req.session.user.login + '/' + req.body.inputFile);
+    var photoID = String(images.length + 1);
     var newPhoto = {
-        srcFile: req.body.inputFile,
-        foto: req.body.fotoDescribe,
+        id: photoID,
+        src: srcPhoto,
+        descr: req.body.fotoDescribe,
         category: req.body.categoryName,
         private: checked
     };
+    images.push(newPhoto);
+    fs.writeFile('.' + loggedUser.images, JSON.stringify(images), function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Файл сохранен.Фото записано");
+        }
+    });
     res.redirect('/userpage.html');
-    console.log(newPhoto);
+    res.end('okay');
+});
+
+app.post('/remove_photo', urlencodedParser, function(req, res) {
+    var remPhotoID = req.body.id;
+    var images = require('.' + loggedUser.images);
+    for (var i = 0; i < images.length; i++) {
+        if (images[i].id === remPhotoID) {
+            images.splice(i, 1);
+            console.log("Фото удалено");
+            break;
+        }
+    }
+    fs.writeFile('.' + loggedUser.images, JSON.stringify(images), function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Файл сохранен.");
+        }
+    });
+    // res.redirect('/userpage.html');
+    res.send({status: 'okay'});
 });
 
 // This responds a GET request for the /userpage.
@@ -78,9 +113,7 @@ app.get('/user_page', function(req, res) {
         return;
     }
     res.send(loggedUser);
-    // res.send({fhotos: ['one.jspg', 'two.jpg']});
 });
-
 
 app.get('/logout', function(req, res) {
     req.session.reset();
