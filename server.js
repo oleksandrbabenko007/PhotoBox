@@ -34,6 +34,7 @@ app.post('/login', urlencodedParser, function(req, res) {
         req.session.user = user;
         loggedUser = JSON.stringify(users[user.login]);
         loggedUser = JSON.parse(loggedUser);
+        loggedUser.login = user.login;
         delete loggedUser.password;
         res.redirect('/userpage.html');
     } else {
@@ -43,52 +44,57 @@ app.post('/login', urlencodedParser, function(req, res) {
 });
 
 app.post('/fileupload', function(req, res) {
+    var fields = {};
+    var pathDirect;
+    var fileName;
     var fstream;
     var userSession = req.session.user;
-    req.pipe(req.busboy);
+
     req.busboy.on('file', function (fieldname, file, filename, val) {
-            mkdirp('./users_images/' + userSession.login, function (err) {
+        mkdirp('./users_images/' + userSession.login, function(err) {
             if (err) {
                 console.error(err);
-            }
-            else 
-                {
-                    console.log('Create!');
+            } else {
+                console.log('Create!');
             }
         });
-        var pathDirect = __dirname + '/users_images/' + userSession.login + "/" + filename;
+        pathDirect = __dirname + '/users_images/' + userSession.login + "/" + filename;
+        fileName = filename;
         fstream = fs.createWriteStream(pathDirect);
-        file.pipe(fstream);      
-        fstream.on('close', function () {
+        file.pipe(fstream);
+        fstream.on('close', function() {
             res.redirect('/userpage.html');
         });
-
     });
 
     req.busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-        console.log('Field [' + fieldname + ']: value: ' + inspect(val));
+        console.log('Field [' + fieldname + ']: value: ' + val);
+        fields[fieldname] = inspect(val);
     });
 
+    req.busboy.on('finish', function() {
+        console.log('Done parsing form!');
+        writeToJSON(fileName, fields);
+    });
+    req.pipe(req.busboy);
 });
 
-app.post('/modalWindow', urlencodedParser, function(req, res) {
+function writeToJSON(fileName, fields){
+    console.log(loggedUser);
     var images = require('.' + loggedUser.images);
+    var newPhoto = {};
+    newPhoto.id = String(images.length + 1);
+    newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
 
-    var checked;
-    if (req.body.privateFoto) {
+    newPhoto.descr = fields.fotoDescribe;
+    newPhoto.category = fields.categoryName;
+
+    var checked = false;
+    if (fields.privateFoto) {
         checked = true;
-    } else {
-        checked = false;
     }
-    var srcPhoto = String('/users_images/' + req.session.user.login + '/' + req.body.inputFile);
-    var photoID = String(images.length + 1);
-    var newPhoto = {
-        id: photoID,
-        src: srcPhoto,
-        descr: req.body.fotoDescribe,
-        category: req.body.categoryName,
-        private: checked
-    };
+    newPhoto.private = checked;
+    console.log(newPhoto);
     images.push(newPhoto);
     fs.writeFile('.' + loggedUser.images, JSON.stringify(images), function(err) {
         if (err) {
@@ -97,9 +103,7 @@ app.post('/modalWindow', urlencodedParser, function(req, res) {
             console.log("Файл сохранен.Фото записано");
         }
     });
-    res.redirect('/userpage.html');
-    res.end('okay');
-});
+}
 
 app.post('/remove_photo', urlencodedParser, function(req, res) {
     var remPhotoID = req.body.id;
