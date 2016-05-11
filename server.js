@@ -122,7 +122,6 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
     res.send({status: 'okay'});
 });
 
-
 app.get('/user_page', function(req, res) {
     if (!req.session.user) {
         res.send({error: 'not logged in'});
