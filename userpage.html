@@ -39,7 +39,6 @@
                     <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
                 </div>
             </div>
-
             <div class="row image-list center-block">
 <!--            <a href="#" class="thumbnail"><img src="image/8fa7KMFG66A.jpg" class="img-responsive" alt=""></a> -->
             </div>
@@ -96,6 +95,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
+    <script>
+        $('.image-list').masonry({
+            itemSelector: '.thumbnail',
+            columnWidth: 200
+        });
+    </script>
     <script src="userPageLoad.js"></script>
 </body>
 </html>

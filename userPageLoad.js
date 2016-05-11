@@ -13,8 +13,21 @@ function logImages(res) {
     var galery = $('.image-list');
     var link;
     for (var i = 0; i < res.length; i++) {
-        link = $('<a>', {href: res[i].src, class: "thumbnail"}).appendTo(galery);
+        link = $('<div>', {class: "thumbnail"}).appendTo(galery);
+        link.append('<span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" value="' + res[i].id + '"></span>');
         link.append('<img src="' + res[i].src + '" class="img-responsive">');
         link.append('<div class="caption">' + res[i].descr + '</div>');
     }
 }
+
+$('.image-list').on('click', '.remove-photo', function(event) {
+    event.preventDefault();
+    var imageID = {id: $(this).attr('value')};
+    console.log(imageID);
+
+    $.post('/remove_photo', imageID, function(res) {
+        if (res.status) {
+            location.reload();
+        }
+    });
+});
