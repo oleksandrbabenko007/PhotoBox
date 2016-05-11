@@ -9,6 +9,7 @@ var app = express();
 var loggedUser;
 var busboy = require('connect-busboy');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
+var mkdirp = require('mkdirp');
 app.use(busboy()); 
 app.use(cookieParser());
 app.use(session({
@@ -28,7 +29,6 @@ app.post('/login', urlencodedParser, function(req, res) {
         loggedUser = JSON.stringify(users[user.login]);
         loggedUser = JSON.parse(loggedUser);
         delete loggedUser.password;
-
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
@@ -41,19 +41,25 @@ app.post('/fileupload', function(req, res) {
     var userSession = req.session.user;
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename, val) {
-        console.log("Uploading--> " + filename); 
-        console.log("val-->" + val);
-        console.log("file -->" + file);
-        console.log("fieldName-->" + fieldname);
-        console.log(path);
-        var path = __dirname + '/users_images/' + userSession.login + "/" +filename;
-        fstream = fs.createWriteStream(path);
+            mkdirp('./users_images/' + userSession.login, function (err) {
+            if (err) {
+                console.error(err);
+            }
+            else 
+                {
+                    console.log('Create!');
+            }
+        });
+        var pathDirect = __dirname + '/users_images/' + userSession.login + "/" + filename;
+        fstream = fs.createWriteStream(pathDirect);
         file.pipe(fstream);      
         fstream.on('close', function () {
             res.redirect('/userpage.html');
         });
+
     });
 
+});
 
 app.post('/modalWindow', urlencodedParser, function(req, res) {
     var images = require('.' + loggedUser.images);
@@ -132,4 +138,4 @@ function isUser(user, users) {
         return false;
     }
     return user.password === users[user.login].password;
-}
+};  

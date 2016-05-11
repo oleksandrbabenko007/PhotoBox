@@ -24,10 +24,7 @@
             </div>
         </header>
 
-<form name="uploader" action="/fileupload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" id="file">
-    <input type="submit" value="Upload">
-    </form>
+
         <div class="content-wrapper">
 
             <div class="row top-user-info">
@@ -58,18 +55,24 @@
 
     </div>   <!-- container-fluid -->
 
+<!-- <form name="uploader" action="/fileupload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" id="file">
+    <input type="submit" value="Upload">
+    </form> -->
 
-<form class="form-signin" action="/modalWindow" method="POST">
+
+
     <div class="modal fade" id="modal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header center-text">
                     <h2>Uploaded new photo</h2>
+                    <form name="uploader" id = "uploader" action="/fileupload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" id="file">
+                    </form>
                 </div>
+                <form class="form-signin" action="/modalWindow" method="POST">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="file" name="inputFile">
-                    </div>
                     <div class = "form-group center-text" >
                         <label for="namephoto" ><h3>Describe your photo</h3></label>
                         <textarea class="form-control" rows="3" name="fotoDescribe" ></textarea>
@@ -96,7 +99,14 @@
         </div>
     </div>
     </form>
-
+  <script type="text/javascript">
+        // var form = document.getElementById("uploader");
+        $(document).ready( function(){
+        $("#closemodal").click(function(){
+            $("#uploader").submit();
+        });
+    });  
+  </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="userPageLoad.js"></script>
