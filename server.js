@@ -50,8 +50,8 @@ app.post('/changeAvatarka', function (req, res) {
         ftream = fs.createWriteStream(path);
         file.pipe(ftream);
         pathToAvatar = users[loggedUser.login].avatar;
-        pathToAvatar = 'users_images/admin/' + filename;      
-        loggedUser.avatar = 'users_images/admin/' + filename;
+        pathToAvatar = 'users_images/' + userSes.login +'/' + filename;      
+        loggedUser.avatar = 'users_images/' + userSes.login +'/' + filename;    
         fs.writeFile('./users.json', JSON.stringify(users), function(err) {
             if (err) {
                 console.log(err);
