@@ -4,15 +4,19 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
-var fs = require('fs');
-var http = require('http'),
-    inspect = require('util').inspect;
+var fileExists = require('file-exists');
+
 var app = express();
 var loggedUser;
 var busboy = require('connect-busboy');
-var urlencodedParser = bodyParser.urlencoded({extended: false});
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
+
 var mkdirp = require('mkdirp');
-app.use(busboy()); 
+
+app.use(busboy());
+
 app.use(cookieParser());
 app.use(session({
     cookieName: 'session',
@@ -69,20 +73,27 @@ app.post('/changeAvatarka', function (req, res) {
 app.post('/fileupload', function(req, res) {
     var fields = {};
     var pathDirect;
+    var path = './users_images/' + loggedUser.login;
     var fileName;
     var fstream;
-    var userSession = req.session.user;
-
-    req.busboy.on('file', function (fieldname, file, filename, val) {
-        mkdirp('./users_images/' + userSession.login, function(err) {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log('Create!');
+    mkdirp(path, function(err) {
+        if (err) {
+            console.error(err);
+        } else {
+            console.log('Folder exists!');
+        }
+    });
+    if (!fileExists(path + '/pictures.json')) {
+        fs.writeFile(path + '/pictures.json', '[]', function(errc) {
+            if (errc) {
+                throw errc;
             }
+            console.log('File "pictures.json" created');
         });
-        pathDirect = __dirname + '/users_images/' + userSession.login + "/" + filename;
-        fileName = filename;
+    }
+    req.busboy.on('file', function(fieldname, file, filename, val) {
+        pathDirect = __dirname + '/users_images/' + loggedUser.login + "/" + filename;
+        fileName = encodeURIComponent(filename);
         fstream = fs.createWriteStream(pathDirect);
         file.pipe(fstream);
         fstream.on('close', function() {
@@ -91,8 +102,7 @@ app.post('/fileupload', function(req, res) {
     });
 
     req.busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
-        console.log('Field [' + fieldname + ']: value: ' + val);
-        fields[fieldname] = inspect(val);
+        fields[fieldname] = val;
     });
 
     req.busboy.on('finish', function() {
@@ -102,11 +112,10 @@ app.post('/fileupload', function(req, res) {
     req.pipe(req.busboy);
 });
 
-function writeToJSON(fileName, fields){
-    console.log(loggedUser);
+function writeToJSON(fileName, fields) {
     var images = require('.' + loggedUser.images);
     var newPhoto = {};
-    newPhoto.id = String(images.length + 1);
+    newPhoto.id = String(getRandomPhotoID(0, 999));
     newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
@@ -121,7 +130,7 @@ function writeToJSON(fileName, fields){
         if (err) {
             console.log(err);
         } else {
-            console.log("Файл сохранен.Фото записано");
+            console.log("File saved. New photo was add.");
         }
     });
 }
@@ -132,7 +141,7 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
     for (var i = 0; i < images.length; i++) {
         if (images[i].id === remPhotoID) {
             images.splice(i, 1);
-            console.log("Фото удалено");
+            console.log("Photo deleted.");
             break;
         }
     }
@@ -140,18 +149,17 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log("Файл сохранен.");
+            console.log("File update");
         }
     });
-    // res.redirect('/userpage.html');
     res.send({status: 'okay'});
 });
 
 app.get('/user_page', function(req, res) {
     if (!req.session.user) {
-        res.send({error: 'not logged in'});
+        res.send({error: 'not logged in' });
         return;
-    };
+    }
     res.send(loggedUser);
 });
 
@@ -173,3 +181,7 @@ function isUser(user, users) {
     }
     return user.password === users[user.login].password;
 };
+
+function getRandomPhotoID(min, max) {
+    return Math.round(Math.random() * (max - min) + min);
+}
