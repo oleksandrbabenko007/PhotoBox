@@ -5,17 +5,13 @@ var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
 var fs = require('fs');
-
 var http = require('http'),
     inspect = require('util').inspect;
-
 var app = express();
 var loggedUser;
 var busboy = require('connect-busboy');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-
 var mkdirp = require('mkdirp');
-
 app.use(busboy()); 
 app.use(cookieParser());
 app.use(session({
@@ -41,6 +37,33 @@ app.post('/login', urlencodedParser, function(req, res) {
         res.redirect('back');
     }
     res.end(JSON.stringify(user));
+});
+
+app.post('/changeAvatarka', function (req, res) {
+    console.log(loggedUser.avatar);
+    var userSes = req.session.user;
+    var path;
+    var ftream;
+    var pathToAvatar;
+    req.busboy.on('file', function (fieldname, file, filename) {
+        path = __dirname + '/users_images/' + userSes.login + "/" + filename;
+        ftream = fs.createWriteStream(path);
+        file.pipe(ftream);
+        pathToAvatar = users[loggedUser.login].avatar;
+        pathToAvatar = 'users_images/admin/' + filename;      
+        loggedUser.avatar = 'users_images/admin/' + filename;
+        fs.writeFile('./users.json', JSON.stringify(users), function(err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Avatar change");
+            }
+        });
+        ftream.on('close', function() {
+            res.redirect('/userpage.html');
+        });
+    });
+    req.pipe(req.busboy);
 });
 
 app.post('/fileupload', function(req, res) {
@@ -85,10 +108,8 @@ function writeToJSON(fileName, fields){
     var newPhoto = {};
     newPhoto.id = String(images.length + 1);
     newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
-
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
-
     var checked = false;
     if (fields.privateFoto) {
         checked = true;

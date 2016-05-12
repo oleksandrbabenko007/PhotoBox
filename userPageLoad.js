@@ -31,3 +31,14 @@ $('.image-list').on('click', '.remove-photo', function(event) {
         }
     });
 });
+
+$(".avatar").on("mouseover", ".img-circle", function() {
+    $(this).css("opacity", "0.5");
+    $("div#alex").css("display", "block");
+}).on("mouseout", ".img-circle", function() {
+    $(this).css("opacity", "1"); 
+    $("div#alex").css("display", "none");
+});
+$(".avatar").on("click", ".img-circle", function() {
+    $("#avatarka").trigger("click");
+});

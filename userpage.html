@@ -28,17 +28,21 @@
 
             <div class="row top-user-info">
                 <div class="col-xs-2 avatar">
-                    <!-- <img src="image/1k-UKTeDmGI.jpg" class="img-responsive img-circle" alt=""> -->
-                </div>
-                <div class="col-xs-10 col-sm-7">
-                    <h2 class="gray666 username"><strong></strong></h2>
-                    <p class="status"></p>
-                </div>
+                    <form name = "avatar" action="/changeAvatarka" method="post" enctype="multipart/form-data" >
+                        <input type="file" name="avatar" id="avatarka" onchange='this.form.submit();' required="" />
+                        </form> 
+                            <!-- <img src="image/1k-UKTeDmGI.jpg" class="img-responsive img-circle" alt=""> -->
+                        <div id = "alex"><h1>Change</h1></div>
+                        </div>
+                        <div class="col-xs-10 col-sm-7">
+                            <h2 class="gray666 username"><strong></strong></h2>
+                            <p class="status"></p>
+                        </div>
 
-                <div class="col-xs-12 col-sm-3">
-                    <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
-                </div>
-            </div>
+                        <div class="col-xs-12 col-sm-3">
+                            <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
+                        </div>
+                    </div>
             <div class="row image-list center-block">
 <!--            <a href="#" class="thumbnail"><img src="image/8fa7KMFG66A.jpg" class="img-responsive" alt=""></a> -->
             </div>

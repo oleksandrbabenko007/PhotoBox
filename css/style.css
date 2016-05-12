@@ -1,19 +1,15 @@
-.label-inline{
-    display: block;
+
+div#alex {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 75px;
 }
 
-.checkbox div:first-child{
-    float:left;
+#avatarka{
+    opacity: 0;
 }
 
-.checkbox div:last-child{
-    float:right;
-}
-
-.center-text{
-      text-align: center; 
-}
-/*------------*/
 body {
     min-width: 320px;
 }
