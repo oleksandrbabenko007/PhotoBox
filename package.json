@@ -13,7 +13,8 @@
     "cookie-parser": "*",
     "client-sessions": "*",
     "connect-busboy" : "*",
-    "mkdirp" : "*"
+    "mkdirp" : "*",
+    "file-exists": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
