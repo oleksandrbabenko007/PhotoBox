@@ -5,10 +5,13 @@ $.get('/user_page', function(res) {
     }
     $('.username').find('strong').text(res.name);
     $('.status').text(res.status);
-    $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar');
+    $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar'); 
     $.get(res.images, logImages);
-
 });
+
+// $.post('/changeAvatarka', function(res) {
+//     $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar');
+// });
 
 function logImages(res) {
     var galery = $('.image-list');
@@ -19,23 +22,21 @@ function logImages(res) {
         link.append('<img src="' + res[i].src + '" class="img-responsive openmodal">');
         // <a class="fancybox" rel="group" href="users_images/sasha/1.jpg"><img src="users_images/sasha/1.jpg" alt="" /></a>
         link.append('<div class="caption">' + res[i].descr + '</div>');
-
     }
 }
 
 $('.image-list').on('click', '.remove-photo', function(event) {
     event.preventDefault();
+    var image = $(this).parent().removeClass('fancybox');
     var imageID = {id: $(this).attr('value')};
     console.log(imageID);
-
     $.post('/remove_photo', imageID, function(res) {
         if (res.status) {
-            location.reload();
+            image.remove();
         }
     });
 });
-
-$(".avatar").on("mouseover", ".img-circle", function() {
+;$(".avatar").on("mouseover", ".img-circle", function() {
     $("div#alex").show("slow");
 }).on("mouseout", ".img-circle", function() {
     $("div#alex").hide("slow");
