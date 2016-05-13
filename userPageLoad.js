@@ -7,16 +7,19 @@ $.get('/user_page', function(res) {
     $('.status').text(res.status);
     $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar');
     $.get(res.images, logImages);
+
 });
 
 function logImages(res) {
     var galery = $('.image-list');
     var link;
     for (var i = 0; i < res.length; i++) {
-        link = $('<div>', {class: "thumbnail"}).appendTo(galery);
+        link = $('<a>', {class: "thumbnail fancybox", rel: "group", href: res[i].src}).appendTo(galery);
         link.append('<span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" value="' + res[i].id + '"></span>');
-        link.append('<img src="' + res[i].src + '" class="img-responsive">');
+        link.append('<img src="' + res[i].src + '" class="img-responsive openmodal">');
+        // <a class="fancybox" rel="group" href="users_images/sasha/1.jpg"><img src="users_images/sasha/1.jpg" alt="" /></a>
         link.append('<div class="caption">' + res[i].descr + '</div>');
+
     }
 }
 
@@ -33,12 +36,20 @@ $('.image-list').on('click', '.remove-photo', function(event) {
 });
 
 $(".avatar").on("mouseover", ".img-circle", function() {
-    $(this).css("opacity", "0.5");
-    $("div#alex").css("display", "block");
+    $("div#alex").show("slow");
 }).on("mouseout", ".img-circle", function() {
-    $(this).css("opacity", "1"); 
-    $("div#alex").css("display", "none");
+    $("div#alex").hide("slow");
 });
+
 $(".avatar").on("click", ".img-circle", function() {
     $("#avatarka").trigger("click");
+});
+
+$(document).ready(function() {
+    $(".fancybox").fancybox({
+        openEffect  : 'fade',
+        openSpeed : 'slow',
+        closeEffect : 'fade',
+        closeSpeed : 'slow' 
+    });
 });
