@@ -65,6 +65,7 @@ app.post('/changeAvatarka', function (req, res) {
         });
         ftream.on('close', function() {
             res.redirect('/userpage.html');
+            // console.log(res);
         });
     });
     req.pipe(req.busboy);

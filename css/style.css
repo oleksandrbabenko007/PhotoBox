@@ -24,8 +24,10 @@
 div#alex {
     display: none;
     position: absolute;
-    top: 120px;
-    left: 75px;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
 
 .openmodal{
@@ -135,7 +137,9 @@ header {
 #error {
     display: none;
 }
-
+/*.thumbnail .fancybox{
+}
+*/
 .glyphicon-remove {
     padding: 10px;
     color: red;
