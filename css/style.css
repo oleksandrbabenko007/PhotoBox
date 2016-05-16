@@ -144,6 +144,7 @@ header {
     padding: 10px;
     color: red;
     cursor: pointer;
+    float: right;
 }
 
 .fancybox-opened .fancybox-skin {
