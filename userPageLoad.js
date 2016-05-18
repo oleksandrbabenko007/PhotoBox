@@ -1,17 +1,13 @@
 $(function() {
-
-    // todo: replace " => '
     var guest = false;
-    // todo: rename url2
-    var url2 = window.location.search || '';
-    if (url2) {
+    var url = window.location.search || '';
+    if (url) {
         guest = true;
         $('.btn-login').hide();
-        // todo: rename
-        $('#avatarka').remove();
+        $('#chooseAvatar').remove();
     }
 
-    $.get('/user_page' + url2, function(response) {
+    $.get('/user_page' + url, function(response) {
         if (response.error || !response) {
             window.location.href = '/index.html';
             return;
@@ -26,11 +22,11 @@ $(function() {
             $('.username').find('strong').text(res.name);
             $('.status').text(res.status);
             $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar'); 
-            $.get(res.images, displayImages);
+            $.get(res.images, logImages);
         }
     });
 
-    function displayImages(res) {
+    function logImages(res) {
         var galery = $('.image-list');
         var link;
         for (var i = 0; i < res.length; i++) {
@@ -60,13 +56,13 @@ $(function() {
 
     if (guest == false) {
         $(".avatar").on("mouseover", ".img-circle", function() {
-            $("div#alex").show("slow");
+            $("div#textChange").show("slow");
         }).on("mouseout", ".img-circle", function() {
-            $("div#alex").hide("slow");
+            $("div#textChange").hide("slow");
         });
 
         $(".avatar").on("click", ".img-circle", function() {
-            $("#avatarka").trigger("click");
+            $("#chooseAvatar").trigger("click");
         });
     }
 
@@ -75,5 +71,5 @@ $(function() {
         openSpeed: 'slow',
         closeEffect: 'fade',
         closeSpeed: 'slow'
-    });
+    });    
 });

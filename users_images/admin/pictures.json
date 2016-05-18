@@ -1,51 +1,9 @@
 [
-	{
-		"src": "/users_images/admin/11.jpg",
-		"descr": "jdfkvhdfhvfjd"
-	},
-	{
-		"src": "/users_images/admin/2.jpg",
-		"descr": "klrjfilrfh"
-	},
-	{
-		"src": "/users_images/admin/3.jpg",
-		"descr": "eowiorueifj"
-	},
-	{
-		"src": "/users_images/admin/4.jpg",
-		"descr": "ljgkitjloij"
-	},
-	{
-		"src": "/users_images/admin/11.jpg",
-		"descr": "klrjfilrfh"
-	},
-	{
-		"src": "/users_images/admin/2.jpg",
-		"descr": "eowiorueifj"
-	},
-	{
-		"src": "/users_images/admin/3.jpg",
-		"descr": "ljgkitjloij"
-	},
-	{
-		"id": "316",
-		"src": "/users_images/admin/11.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "489",
-		"src": "/users_images/admin/%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B0.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": true
-	},
-	{
-		"id": "464",
-		"src": "/users_images/admin/hiiO-E3jkgQ.jpg",
-		"descr": "erter",
-		"category": "category2",
-		"private": true
-	}
+    {
+        "id": "944",
+        "src": "\\users_images\\admin\\B0wi50-z80I.jpg",
+        "descr": "",
+        "category": "category1",
+        "private": false
+    }
 ]
