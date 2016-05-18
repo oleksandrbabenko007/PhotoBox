@@ -22,17 +22,12 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-function clone(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
-
 app.post('/login', function(req, res) {
     var user = req.body.credentials;
     if (isUser(user, users)) {
         req.session.user = user;
-        loggedUser = clone(users[user.login]);
-        loggedUser.login = user.login;
-        delete loggedUser.password;
+        req.session.loggedUser = findUser(user.login);
+        loggedUser = req.session.loggedUser;
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
@@ -45,6 +40,7 @@ app.post('/changeAvatarka', function(req, res) {
     if (guestMode) {
         res.end();
     }
+    loggedUser = req.session.loggedUser;
     var ftream;
     req.busboy.on('file', function(fieldname, file, filename) {
         var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
@@ -68,6 +64,7 @@ app.post('/fileupload', function(req, res) {
     if (guestMode) {
         res.end();
     }
+    loggedUser = req.session.loggedUser;
     var fields = {};
     var pathDirect;
     var path = './users_images/' + loggedUser.login;
@@ -110,6 +107,7 @@ app.post('/remove_photo', function(req, res) {
     if (guestMode) {
         res.end();
     }
+    loggedUser = req.session.loggedUser;
     var remPhotoID = req.body.id;
     var images = require('.' + loggedUser.images);
     for (var i = 0; i < images.length; i++) {
@@ -127,12 +125,14 @@ app.post('/remove_photo', function(req, res) {
 });
 
 app.get('/user_page', function(req, res) {
+    console.log(req.session.user);
     if (!req.session.user) {
         res.send({error: 'not logged in'});
         return;
     }
+    loggedUser = req.session.loggedUser;
     if (req.query.user) {
-        if ( (findUser(req.query.user) === false) || (req.query.user === loggedUser.login)){
+        if ((findUser(req.query.user) === false) || (req.query.user === loggedUser.login)){
             res.send([loggedUser, true]);
         } else {
             guestMode = true;
@@ -165,11 +165,16 @@ function isUser(user, users) {
 function findUser(login) {
     // return users[login] || false;
     if(users[login]) {
-        var guest = clone(users[login]);
-        delete guest.password;
-        return guest;
+        var user = clone(users[login]);
+        user.login = login;
+        delete user.password;
+        return user;
     }
     return false;
+}
+
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
 }
 
 function getRandomPhotoId(min, max) {
@@ -181,7 +186,7 @@ function writeToJSON(fileName, fields) {
     var newPhoto = {};
     newPhoto.id = String(getRandomPhotoId(0, 999));
     // todo: path.join
-    newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
+    newPhoto.src = path.join('users_images', loggedUser.login, fileName);
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
     newPhoto.private = fields.privateFoto ? true : false;
