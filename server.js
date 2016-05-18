@@ -1,23 +1,20 @@
 var express = require('express');
 var fs = require('fs');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
 var session = require('client-sessions');
 var users = require('./users.json');
 var fileExists = require('file-exists');
+var busboy = require('connect-busboy');
+var mkdirp = require('mkdirp');
 
 var app = express();
-var loggedUser;
-var busboy = require('connect-busboy');
 var urlencodedParser = bodyParser.urlencoded({
     extended: false
 });
-
-var mkdirp = require('mkdirp');
+var loggedUser;
 var guestMode = false;
 
 app.use(busboy());
-app.use(cookieParser());
 app.use(session({
     cookieName: 'session',
     secret: 'nata_hin'
@@ -32,8 +29,7 @@ app.post('/login', urlencodedParser, function(req, res) {
 
     if (isUser(user, users)) {
         req.session.user = user;
-        loggedUser = JSON.stringify(users[user.login]);
-        loggedUser = JSON.parse(loggedUser);
+        loggedUser = JSON.parse(JSON.stringify(users[user.login]));
         loggedUser.login = user.login;
         delete loggedUser.password;
         res.redirect('/userpage.html');
@@ -47,23 +43,16 @@ app.post('/changeAvatarka', function(req, res) {
     if (guestMode) {
         res.end();
     }
-    console.log(loggedUser.avatar);
-    var userSes = req.session.user;
     var path;
     var ftream;
-    var pathToAvatar;
     req.busboy.on('file', function(fieldname, file, filename) {
-        path = __dirname + '/users_images/' + userSes.login + "/" + filename;
+        path = __dirname + '/users_images/' + loggedUser.login + "/" + filename;
         ftream = fs.createWriteStream(path);
         file.pipe(ftream);
-        pathToAvatar = users[loggedUser.login].avatar;
-        pathToAvatar = 'users_images/' + userSes.login + '/' + filename;
-        loggedUser.avatar = 'users_images/' + userSes.login + '/' + filename;
+        loggedUser.avatar = 'users_images/' + loggedUser.login + '/' + filename;
         fs.writeFile('./users.json', JSON.stringify(users, null, '\t'), function(err) {
             if (err) {
-                console.log(err);
-            } else {
-                console.log("Avatar change");
+                throw err;
             }
         });
         ftream.on('close', function() {
@@ -84,9 +73,7 @@ app.post('/fileupload', function(req, res) {
     var fstream;
     mkdirp(path, function(err) {
         if (err) {
-            console.error(err);
-        } else {
-            console.log('Folder exists!');
+            throw err;
         }
     });
     if (!fileExists(path + '/pictures.json')) {
@@ -94,10 +81,9 @@ app.post('/fileupload', function(req, res) {
             if (errc) {
                 throw errc;
             }
-            console.log('File "pictures.json" created');
         });
     }
-    req.busboy.on('file', function(fieldname, file, filename, val) {
+    req.busboy.on('file', function(fieldname, file, filename) {
         pathDirect = __dirname + '/users_images/' + loggedUser.login + "/" + filename;
         fileName = encodeURIComponent(filename);
         fstream = fs.createWriteStream(pathDirect);
@@ -107,12 +93,11 @@ app.post('/fileupload', function(req, res) {
         });
     });
 
-    req.busboy.on('field', function(fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) {
+    req.busboy.on('field', function(fieldname, val) {
         fields[fieldname] = val;
     });
 
     req.busboy.on('finish', function() {
-        console.log('Done parsing form!');
         writeToJSON(fileName, fields);
     });
     req.pipe(req.busboy);
@@ -127,15 +112,12 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
     for (var i = 0; i < images.length; i++) {
         if (images[i].id === remPhotoID) {
             images.splice(i, 1);
-            console.log("Photo deleted.");
             break;
         }
     }
     fs.writeFile('.' + loggedUser.images, JSON.stringify(images, null, '\t'), function(err) {
         if (err) {
-            console.log(err);
-        } else {
-            console.log("File update");
+            throw err;
         }
     });
     res.send({status: 'okay'});
@@ -166,10 +148,10 @@ app.get('/logout', function(req, res) {
     res.redirect('/index.html');
 });
 
-var server = app.listen(8081, "localhost", function() {
+var server = app.listen(8081, 'localhost', function() {
     var host = server.address().address;
     var port = server.address().port;
-    console.log("Example app listening at http://%s:%s", host, port);
+    console.log('Example app listening at http://%s:%s', host, port);
 });
 
 function isUser(user, users) {
@@ -177,7 +159,7 @@ function isUser(user, users) {
         return false;
     }
     return user.password === users[user.login].password;
-};
+}
 
 function findUser(login) {
     // return users[login] || false;
@@ -200,16 +182,12 @@ function writeToJSON(fileName, fields) {
     newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
-    var checked = false;
-    if (fields.privateFoto) {
-        checked = true;
-    }
-    newPhoto.private = checked;
-    console.log(newPhoto);
+    newPhoto.private = fields.privateFoto ? true : false;
+
     images.push(newPhoto);
     fs.writeFile('.' + loggedUser.images, JSON.stringify(images, null, '\t'), function(err) {
         if (err) {
-            console.log(err);
+            throw err;
         } else {
             console.log("File saved. New photo was add.");
         }

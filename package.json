@@ -10,7 +10,6 @@
   "dependencies": {
     "express": "4.2.x",
     "body-parser": "*",
-    "cookie-parser": "*",
     "client-sessions": "*",
     "connect-busboy" : "*",
     "mkdirp" : "*",
