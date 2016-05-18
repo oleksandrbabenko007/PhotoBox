@@ -1,1 +1,27 @@
-{"admin":{"password":"admin","name":"Administrator","avatar":"users_images/admin/main.jpg","images":"/users_images/admin/pictures.json"},"nata":{"password":"123","name":"Nataly SomeSurname","status":"Phrase with some philosophical sense","avatar":"users_images/nata/main.jpg","images":"/users_images/nata/pictures.json"},"sasha":{"password":"sasha","name":"Alexsander","avatar":"users_images/nata/main.jpg","images":"/users_images/sasha/pictures.json"},"user":{"password":"123","name":"Some User","avatar":"","images":"/users_images/user/pictures.json"}}
+{
+	"admin": {
+		"password": "admin",
+		"name": "Administrator",
+		"avatar": "users_images/admin/main.jpg",
+		"images": "/users_images/admin/pictures.json"
+	},
+	"nata": {
+		"password": "123",
+		"name": "Nataly SomeSurname",
+		"status": "Phrase with some philosophical sense",
+		"avatar": "users_images/nata/main.jpg",
+		"images": "/users_images/nata/pictures.json"
+	},
+	"sasha": {
+		"password": "sasha",
+		"name": "Alexsander",
+		"avatar": "users_images/nata/main.jpg",
+		"images": "/users_images/sasha/pictures.json"
+	},
+	"user": {
+		"password": "123",
+		"name": "Some User",
+		"avatar": "",
+		"images": "/users_images/user/pictures.json"
+	}
+}
