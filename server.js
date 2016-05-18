@@ -1,35 +1,36 @@
 var express = require('express');
 var fs = require('fs');
+var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
-var users = require('./users.json');
 var fileExists = require('file-exists');
 var busboy = require('connect-busboy');
 var mkdirp = require('mkdirp');
 
-var app = express();
-var urlencodedParser = bodyParser.urlencoded({
-    extended: false
-});
 var loggedUser;
 var guestMode = false;
+var users = require('./users.json');
 
+var app = express();
 app.use(busboy());
 app.use(session({
     cookieName: 'session',
     secret: 'nata_hin'
 }));
 app.use(express.static('.'));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-app.post('/login', urlencodedParser, function(req, res) {
-    var user = {
-        login: req.body.inputLogin,
-        password: req.body.inputPassword
-    };
+function clone(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
 
+app.post('/login', function(req, res) {
+    var user = req.body.credentials;
     if (isUser(user, users)) {
         req.session.user = user;
-        loggedUser = JSON.parse(JSON.stringify(users[user.login]));
+        loggedUser = clone(users[user.login]);
         loggedUser.login = user.login;
         delete loggedUser.password;
         res.redirect('/userpage.html');
@@ -39,18 +40,19 @@ app.post('/login', urlencodedParser, function(req, res) {
     res.end();
 });
 
+//todo: rename path changeAvatarka -> changeAvatar
 app.post('/changeAvatarka', function(req, res) {
     if (guestMode) {
         res.end();
     }
-    var path;
     var ftream;
     req.busboy.on('file', function(fieldname, file, filename) {
-        path = __dirname + '/users_images/' + loggedUser.login + "/" + filename;
-        ftream = fs.createWriteStream(path);
+        var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
+        // todo: rename ftream
+        ftream = fs.createWriteStream(avatarPath);
         file.pipe(ftream);
-        loggedUser.avatar = 'users_images/' + loggedUser.login + '/' + filename;
-        fs.writeFile('./users.json', JSON.stringify(users, null, '\t'), function(err) {
+        loggedUser.avatar = path.join('/users_images', loggedUser.login, filename);
+        fs.writeFile('./users.json', JSON.stringify(users, null, '    '), function(err) {
             if (err) {
                 throw err;
             }
@@ -84,7 +86,8 @@ app.post('/fileupload', function(req, res) {
         });
     }
     req.busboy.on('file', function(fieldname, file, filename) {
-        pathDirect = __dirname + '/users_images/' + loggedUser.login + "/" + filename;
+        // todo: path.join
+        pathDirect = __dirname + '/users_images/' + loggedUser.login + '/' + filename;
         fileName = encodeURIComponent(filename);
         fstream = fs.createWriteStream(pathDirect);
         file.pipe(fstream);
@@ -103,7 +106,7 @@ app.post('/fileupload', function(req, res) {
     req.pipe(req.busboy);
 });
 
-app.post('/remove_photo', urlencodedParser, function(req, res) {
+app.post('/remove_photo', function(req, res) {
     if (guestMode) {
         res.end();
     }
@@ -115,7 +118,7 @@ app.post('/remove_photo', urlencodedParser, function(req, res) {
             break;
         }
     }
-    fs.writeFile('.' + loggedUser.images, JSON.stringify(images, null, '\t'), function(err) {
+    fs.writeFile('.' + loggedUser.images, JSON.stringify(images, null, '    '), function(err) {
         if (err) {
             throw err;
         }
@@ -162,21 +165,22 @@ function isUser(user, users) {
 function findUser(login) {
     // return users[login] || false;
     if(users[login]) {
-        var guest = JSON.parse(JSON.stringify(users[login]));
+        var guest = clone(users[login]);
         delete guest.password;
         return guest;
     }
     return false;
 }
 
-function getRandomPhotoID(min, max) {
+function getRandomPhotoId(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
 function writeToJSON(fileName, fields) {
     var images = require('.' + loggedUser.images);
     var newPhoto = {};
-    newPhoto.id = String(getRandomPhotoID(0, 999));
+    newPhoto.id = String(getRandomPhotoId(0, 999));
+    // todo: path.join
     newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
@@ -187,7 +191,7 @@ function writeToJSON(fileName, fields) {
         if (err) {
             throw err;
         } else {
-            console.log("File saved. New photo was add.");
+            console.log('File saved. New photo was add.');
         }
     });
 }

@@ -1,10 +1,13 @@
-function userPage() {
+$(function() {
 
+    // todo: replace " => '
     var guest = false;
+    // todo: rename url2
     var url2 = window.location.search || '';
     if (url2) {
         guest = true;
         $('.btn-login').hide();
+        // todo: rename
         $('#avatarka').remove();
     }
 
@@ -14,19 +17,20 @@ function userPage() {
             return;
         }
         var res = response[0];
-        if(response[1]) { guest = false; }
-        console.log(res);
+        if (response[1]) {
+            guest = false;
+        }
         if (res.nouser) {
             $('.username').find('strong').text(res.nouser);
         } else {
             $('.username').find('strong').text(res.name);
             $('.status').text(res.status);
             $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar'); 
-            $.get(res.images, logImages);
+            $.get(res.images, displayImages);
         }
     });
 
-    function logImages(res) {
+    function displayImages(res) {
         var galery = $('.image-list');
         var link;
         for (var i = 0; i < res.length; i++) {
@@ -65,10 +69,7 @@ function userPage() {
             $("#avatarka").trigger("click");
         });
     }
-}
 
-$(document).ready(function() {
-    userPage();
     $(".fancybox").fancybox({
         openEffect: 'fade',
         openSpeed: 'slow',
