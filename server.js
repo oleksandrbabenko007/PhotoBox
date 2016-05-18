@@ -40,24 +40,23 @@ app.post('/login', function(req, res) {
     res.end();
 });
 
-//todo: rename path changeAvatarka -> changeAvatar
-app.post('/changeAvatarka', function(req, res) {
+app.post('/changeAvatar', function(req, res) {
     if (guestMode) {
         res.end();
     }
-    var ftream;
+    var fstream;
     req.busboy.on('file', function(fieldname, file, filename) {
         var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
-        // todo: rename ftream
-        ftream = fs.createWriteStream(avatarPath);
-        file.pipe(ftream);
+        fstream = fs.createWriteStream(avatarPath);
+        file.pipe(fstream);
         loggedUser.avatar = path.join('/users_images', loggedUser.login, filename);
+        users[loggedUser.login].avatar = loggedUser.avatar;
         fs.writeFile('./users.json', JSON.stringify(users, null, '    '), function(err) {
             if (err) {
                 throw err;
             }
         });
-        ftream.on('close', function() {
+        fstream.on('close', function() {
             res.redirect('/userpage.html');
         });
     });
@@ -69,25 +68,24 @@ app.post('/fileupload', function(req, res) {
         res.end();
     }
     var fields = {};
-    var pathDirect;
-    var path = './users_images/' + loggedUser.login;
+    var pathDirect
+    var pathToGallery = './users_images/' + loggedUser.login;
     var fileName;
     var fstream;
-    mkdirp(path, function(err) {
+    mkdirp(pathToGallery, function(err) {
         if (err) {
             throw err;
         }
     });
-    if (!fileExists(path + '/pictures.json')) {
-        fs.writeFile(path + '/pictures.json', '[]', function(errc) {
+    if (!fileExists(pathToGallery + '/pictures.json')) {
+        fs.writeFile(pathToGallery + '/pictures.json', '[]', function(errc) {
             if (errc) {
                 throw errc;
             }
         });
     }
     req.busboy.on('file', function(fieldname, file, filename) {
-        // todo: path.join
-        pathDirect = __dirname + '/users_images/' + loggedUser.login + '/' + filename;
+        pathDirect = path.join(__dirname, 'users_images/', loggedUser.login, filename);
         fileName = encodeURIComponent(filename);
         fstream = fs.createWriteStream(pathDirect);
         file.pipe(fstream);
@@ -163,13 +161,12 @@ function isUser(user, users) {
 }
 
 function findUser(login) {
-    // return users[login] || false;
     if(users[login]) {
         var guest = clone(users[login]);
         delete guest.password;
         return guest;
     }
-    return false;
+    return users[login] || false;
 }
 
 function getRandomPhotoId(min, max) {
@@ -180,8 +177,7 @@ function writeToJSON(fileName, fields) {
     var images = require('.' + loggedUser.images);
     var newPhoto = {};
     newPhoto.id = String(getRandomPhotoId(0, 999));
-    // todo: path.join
-    newPhoto.src = '/users_images/' + loggedUser.login + "/" + fileName;
+    newPhoto.src = path.join('/users_images/', loggedUser.login, fileName);
     newPhoto.descr = fields.fotoDescribe;
     newPhoto.category = fields.categoryName;
     newPhoto.private = fields.privateFoto ? true : false;

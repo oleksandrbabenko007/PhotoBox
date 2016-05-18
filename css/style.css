@@ -21,7 +21,7 @@
     opacity: 0.5;
 }
 
-div#alex {
+div#textChange {
     display: none;
     position: absolute;
     top: 30%;
@@ -38,7 +38,7 @@ img.img-responsive.img-circle {
     cursor: pointer;
 }
 
-#avatarka{
+#chooseAvatar{
     opacity: 0;
 }
 
