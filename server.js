@@ -129,14 +129,12 @@ app.get('/user_page', function(req, res) {
         return;
     }
     if (req.query.user) {
-
         if ( (findUser(req.query.user) === false) || (req.query.user === loggedUser.login)){
             res.send([loggedUser, true]);
         } else {
             guestMode = true;
             res.send([findUser(req.query.user), false]);
         }
-
     } else {
         res.send([loggedUser, true]);
     }
