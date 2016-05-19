@@ -2,7 +2,7 @@
     "admin": {
         "password": "admin",
         "name": "Administrator",
-        "avatar": "\\users_images\\admin\\3.jpg",
+        "avatar": "users_images\\admin\\картинка.jpg",
         "images": "/users_images/admin/pictures.json"
     },
     "nata": {
@@ -23,5 +23,5 @@
         "name": "Some User",
         "avatar": "",
         "images": "/users_images/user/pictures.json"
-    },
+    }
 }
