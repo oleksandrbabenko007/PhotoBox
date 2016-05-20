@@ -23,17 +23,21 @@ $(function() {
     });
 
     function logImages(res) {
+        console.log(res);
+        var images = res.data;
         var galery = $('.image-list');
         var link;
-        for (var i = 0; i < res.length; i++) {
-            link = $('<a>', {class: 'thumbnail fancybox', rel: 'group', href: res[i].src}).appendTo(galery);
+        // for (var i = 0; i < images.length; i++) {
+            for (var image in images) {
+            link = $('<a>', {class: 'thumbnail fancybox', rel: 'group', href: images[image]['src']}).appendTo(galery);
             if (guest == false) {
-                link.append('<span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" value="' + res[i].id + '"></span>');
+                link.append('<span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" value="' + image + '"></span>');
             }
-            link.append('<img src="' + res[i].src + '" class="img-responsive openmodal">');
-            link.append('<div class="caption">' + res[i].descr + '</div>');
+            link.append('<img src="' + images[image]['src'] + '" class="img-responsive openmodal">');
+            link.append('<div class="caption">' + images[image]['descr'] + '</div>');
         }
     }
+    
 
     $('.image-list').on('click', '.remove-photo', function(event) {
         event.preventDefault();

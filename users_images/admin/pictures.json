@@ -1,23 +1,17 @@
-[
-	{
-		"id": "944",
-		"src": "\\users_images\\admin\\B0wi50-z80I.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "29",
-		"src": "\\users_images\\admin\\I6P6h3nFRTk.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "487",
-		"src": "\\users_images\\admin\\B0wi50-z80I.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	}
-]
+{
+    "data": {
+        "345": {
+            "src": "\\users_images\\admin\\I6P6h3nFRTk.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "423": {
+            "src": "\\users_images\\admin\\B0wi50-z80I.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
+    },
+    "lastId": "946"
+}
