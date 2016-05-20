@@ -14,7 +14,7 @@ describe('Json storage test suite', function() {
                 1: {name: 'john'},
                 2: {name: 'oldman'}
             },
-            lastId: 2
+            counter: 2
         }, null, '    '));
     });
 

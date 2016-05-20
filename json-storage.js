@@ -7,7 +7,7 @@ function JsonStorage(jsonPath) {
     this.jsonPath = jsonPath;
 
     if(!fileExists(jsonPath)) {
-        save(jsonPath, {data:{}, lastId:0});
+        save(jsonPath, {data:{}, counter:0});
     }
     this.jsonData = JSON.parse(fs.readFileSync(jsonPath));
     this.data = this.jsonData.data;
@@ -26,13 +26,13 @@ JsonStorage.prototype.findByKey = function(key) {
 
 JsonStorage.prototype.insert = function(entity, key) {
     if(typeof(key) == 'undefined') {
-        key = parseInt(this.jsonData.lastId) + 1;
+        key = parseInt(this.jsonData.counter) + 1;
     }
     if (typeof this.data[key] !== 'undefined') {
         throw new Error(`Insert error: entity with key ${key} already exists exist`);
     }
     this.data[key] = entity;
-    this.jsonData.lastId = key.toString();
+    this.jsonData.counter = key.toString();
     save(this.jsonPath, this.jsonData);
     return key;
 }
