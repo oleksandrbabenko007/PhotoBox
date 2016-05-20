@@ -6,10 +6,9 @@ var session = require('client-sessions');
 var fileExists = require('file-exists');
 var busboy = require('connect-busboy');
 var mkdirp = require('mkdirp');
-
 //var jsonStorage = require('./json-storage.js');
-var users = require('./users.json');
 
+var users = require('./users.json');
 var app = express();
 app.use(busboy());
 app.use(session({
@@ -22,6 +21,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/login', function(req, res) {
+<<<<<<< Updated upstream
     // userStorage = jsonStorage(__dir.. 'users.json');
     // get clonned copy by key
     // user = userStorage.findbyKey(req.body.credentials.login);
@@ -42,6 +42,7 @@ app.post('/login', function(req, res) {
 
 app.post('/changeAvatar', function(req, res) {
     var loggedUser = req.session.loggedUser;
+
     var fstream;
 
     req.busboy.on('file', function(fieldname, file, filename) {
@@ -64,9 +65,11 @@ app.post('/changeAvatar', function(req, res) {
 
 app.post('/fileupload', function(req, res) {
     var loggedUser = req.session.loggedUser;
+
     var fields = {};
     var pathDirect;
     var pathToGallery = path.join(__dirname, 'users_images', loggedUser.login);
+
     var fileName;
     var fstream;
     mkdirp(pathToGallery, function(err) {
@@ -82,7 +85,9 @@ app.post('/fileupload', function(req, res) {
         });
     }
     req.busboy.on('file', function(fieldname, file, filename) {
+
         pathDirect = path.join(pathToGallery, filename);
+
         fileName = encodeURIComponent(filename);
         fstream = fs.createWriteStream(pathDirect);
         file.pipe(fstream);
@@ -173,6 +178,7 @@ function getRandomPhotoId(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
+<<<<<<< Updated upstream
 function savePhotoInfo(fileName, info, loggedUser) {
     var images = require('.' + loggedUser.images);
     var newPhoto = {};
@@ -181,7 +187,6 @@ function savePhotoInfo(fileName, info, loggedUser) {
     newPhoto.descr = info.fotoDescribe;
     newPhoto.category = info.categoryName;
     newPhoto.private = info.privateFoto ? true : false;
-
     images.push(newPhoto);
     fs.writeFile('.' + loggedUser.images, JSON.stringify(images, null, '\t'), function(err) {
         if (err) {

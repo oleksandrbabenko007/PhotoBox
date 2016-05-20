@@ -1,3 +1,7 @@
+#showList{
+    display: none;
+}
+
 .glyphicon{
     position: absolute;
     opacity: 0;

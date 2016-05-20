@@ -61,7 +61,11 @@ $(function() {
         });
     }
 
-    $('.fancybox').fancybox({
+    $('#usersList').on('click', function(){
+        $('#usersList2').slideToggle('slow');
+    });
+
+    $(".fancybox").fancybox({
         openEffect: 'fade',
         openSpeed: 'slow',
         closeEffect: 'fade',
