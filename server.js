@@ -6,9 +6,9 @@ var session = require('client-sessions');
 var fileExists = require('file-exists');
 var busboy = require('connect-busboy');
 var mkdirp = require('mkdirp');
+var JsonStorage = require('./json-storage.js');
 
-//var jsonStorage = require('./json-storage.js');
-var users = require('./users.json');
+var userStorage = new JsonStorage('./users.json');
 
 var app = express();
 app.use(busboy());
@@ -22,17 +22,15 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/login', function(req, res) {
-    // userStorage = jsonStorage(__dir.. 'users.json');
-    // get clonned copy by key
-    // user = userStorage.findbyKey(req.body.credentials.login);
-    // userStorage.update(key, entity)
-    // userStorage.delete(key)
-    // userStorage.find(property, value);
 
     var user = req.body.credentials;
+    var users = userStorage.getAll();
+
     if (isUser(user, users)) {
-        req.session.user = user;
-        req.session.loggedUser = findUser(user.login);
+        // req.session.user = user;
+        req.session.loggedUser = userStorage.findByKey(user.login);
+        req.session.loggedUser.login = user.login;
+
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
@@ -45,16 +43,14 @@ app.post('/changeAvatar', function(req, res) {
     var fstream;
 
     req.busboy.on('file', function(fieldname, file, filename) {
+
         var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
         fstream = fs.createWriteStream(avatarPath);
         file.pipe(fstream);
+
         loggedUser.avatar = path.join('users_images', loggedUser.login, filename);
-        users[loggedUser.login].avatar = loggedUser.avatar;
-        fs.writeFile(path.join(__dirname, 'users.json'), JSON.stringify(users, null, '    '), function(err) {
-            if (err) {
-                throw err;
-            }
-        });
+        userStorage.update(loggedUser, loggedUser.login);
+
         fstream.on('close', function() {
             res.redirect('/userpage.html');
         });
@@ -121,19 +117,19 @@ app.post('/remove_photo', function(req, res) {
 
 app.get('/user_page', function(req, res) {
     var loggedUser = req.session.loggedUser;
-    if (!req.session.user) {
+
+    if (!req.session.loggedUser) {
         res.send({error: 'not logged in'});
         return;
     }
     if (req.query.user) {
-        if ((findUser(req.query.user) === false) || (req.query.user === loggedUser.login)){
+        if ((userStorage.findByKey(req.query.user) === false) || (req.query.user === loggedUser.login)) {
             res.send([loggedUser, true]);
         } else {
-            res.send([findUser(req.query.user), false]);
+            res.send([userStorage.findByKey(req.query.user), false]);
         }
-    } else {
-        res.send([loggedUser, true]);
     }
+    res.send([loggedUser, true]);
     res.end();
 });
 
@@ -155,19 +151,6 @@ function isUser(user, users) {
     return user.password === users[user.login].password;
 }
 
-function findUser(login) {
-    if (users[login]) {
-        var user = clone(users[login]);
-        user.login = login;
-        delete user.password;
-        return user;
-    }
-    return false;
-}
-
-function clone(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
 
 function getRandomPhotoId(min, max) {
     return Math.round(Math.random() * (max - min) + min);
