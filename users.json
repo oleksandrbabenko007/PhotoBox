@@ -1,10 +1,9 @@
 {
-
     "data": {
         "admin": {
             "password": "admin",
             "name": "Administrator",
-            "avatar": "users_images\\admin\\FIMelT2_IS8.jpg",
+            "avatar": "users_images\\admin\\fyyOO93cvFg.jpg",
             "images": "/users_images/admin/pictures.json",
             "login": "admin"
         },

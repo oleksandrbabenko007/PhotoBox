@@ -3,9 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
-var fileExists = require('file-exists');
 var busboy = require('connect-busboy');
-var mkdirp = require('mkdirp');
 var Storage = require('./json-storage.js');
 
 var userStorage = new Storage('./users.json');
@@ -23,13 +21,10 @@ app.use(bodyParser.urlencoded({
 
 app.post('/login', function(req, res) {
     var user = req.body.credentials;
-    var users = userStorage.getAll();
 
-    if (isUser(user, users)) {
-        // req.session.user = user;
+    if (isUser(user, userStorage.getAll())) {
         req.session.loggedUser = userStorage.findByKey(user.login);
         req.session.loggedUser.login = user.login;
-
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
@@ -39,11 +34,9 @@ app.post('/login', function(req, res) {
 
 app.post('/changeAvatar', function(req, res) {
     var loggedUser = req.session.loggedUser;
-
     var fstream;
 
     req.busboy.on('file', function(fieldname, file, filename) {
-
         var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
         fstream = fs.createWriteStream(avatarPath);
         file.pipe(fstream);
@@ -87,7 +80,6 @@ app.post('/fileupload', function(req, res) {
     });
 
     req.busboy.on('finish', function() {
-
         var newPhoto = {};
         newPhoto.src = path.join('users_images', loggedUser.login, fileName);
         newPhoto.descr = fields.fotoDescribe;
@@ -97,7 +89,6 @@ app.post('/fileupload', function(req, res) {
     });
     req.pipe(req.busboy);
 });
-
 
 app.post('/remove_photo', function(req, res) {
     var loggedUser = req.session.loggedUser;
@@ -117,7 +108,6 @@ app.get('/user_page', function(req, res) {
     }
     if (req.query.user) {
         if ((userStorage.findByKey(req.query.user) === false) || (req.query.user === loggedUser.login)) {
-
             res.send([loggedUser, true]);
         } else {
             res.send([userStorage.findByKey(req.query.user), false]);
@@ -144,9 +134,3 @@ function isUser(user, users) {
     }
     return user.password === users[user.login].password;
 }
-
-
-function getRandomPhotoId(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-}
-

@@ -19,10 +19,10 @@ $(function() {
         $('.username').find('strong').text(res.name);
         $('.status').text(res.status);
         $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar'); 
-        $.get(res.images, logImages);
+        $.get(res.images, displayImages);
     });
 
-    function logImages(res) {
+    function displayImages(res) {
         var images = res.data;
         var galery = $('.image-list');
         var link;
@@ -35,7 +35,6 @@ $(function() {
             link.append('<div class="caption">' + images[image]['descr'] + '</div>');
         }
     }
-    
 
     $('.image-list').on('click', '.remove-photo', function(event) {
         event.preventDefault();
@@ -62,7 +61,6 @@ $(function() {
             $('#chooseAvatar').trigger('click');
         });
     }
-
 
     $(".fancybox").fancybox({
         openEffect: 'fade',

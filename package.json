@@ -4,15 +4,16 @@
   "description": "PhotoBox",
   "main": "index.html",
   "devDependencies": {
-      "eslint": "^2.8.0",
-      "eslint-config-google": "^0.5.0"
+    "eslint": "^2.8.0",
+    "eslint-config-google": "^0.5.0",
+    "eslint-plugin-jasmine": "^1.8.1"
   },
   "dependencies": {
     "express": "4.2.x",
     "body-parser": "*",
     "client-sessions": "*",
-    "connect-busboy" : "*",
-    "mkdirp" : "*",
+    "connect-busboy": "*",
+    "mkdirp": "*",
     "file-exists": "*"
   },
   "scripts": {

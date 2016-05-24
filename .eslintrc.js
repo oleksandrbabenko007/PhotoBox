@@ -8,6 +8,7 @@ module.exports = {
         "$": true
      },
     "env": {
-        "browser": true
+        "browser": true,
+        "jasmine": true
     }
 };
