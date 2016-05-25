@@ -4,7 +4,7 @@
             "password": "admin",
             "name": "Administrator",
             "avatar": "users_images\\admin\\картинка.jpg",
-            "images": "/users_images/admin/pictures.json"
+            "images": "/users_images/admin/pictures.json",
             "lastActivity": 1464167910567
         },
         "nata": {
