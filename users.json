@@ -3,27 +3,31 @@
         "admin": {
             "password": "admin",
             "name": "Administrator",
-            "avatar": "users_images\\admin\\fyyOO93cvFg.jpg",
+            "avatar": "users_images\\admin\\картинка.jpg",
             "images": "/users_images/admin/pictures.json"
+            "lastActivity": 1464167910567
         },
         "nata": {
             "password": "123",
             "name": "Nataly SomeSurname",
             "status": "Phrase with some philosophical sense",
             "avatar": "users_images\\nata\\картинка.jpg",
-            "images": "/users_images/nata/pictures.json"
+            "images": "/users_images/nata/pictures.json",
+            "lastActivity": 1464167927010
         },
         "sasha": {
             "password": "sasha",
             "name": "Alexsander",
             "avatar": "\\users_images\\sasha\\fyyOO93cvFg.jpg",
-            "images": "/users_images/sasha/pictures.json"
+            "images": "/users_images/sasha/pictures.json",
+            "lastActivity": 1464165442681
         },
         "user": {
             "password": "123",
             "name": "Some User",
             "avatar": "",
-            "images": "/users_images/user/pictures.json"
+            "images": "/users_images/user/pictures.json",
+            "lastActivity": 1464166151775
         }
     },
     "lastId": 0
