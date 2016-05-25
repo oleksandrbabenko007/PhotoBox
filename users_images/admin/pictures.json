@@ -11,7 +11,13 @@
             "descr": "",
             "category": "category1",
             "private": false
+        },
+        "9481": {
+            "src": "users_images\\admin\\I6P6h3nFRTk.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
         }
     },
-    "lastId": "948"
+    "lastId": "9481"
 }

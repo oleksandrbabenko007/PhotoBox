@@ -5,7 +5,7 @@
             "name": "Administrator",
             "avatar": "users_images\\admin\\картинка.jpg",
             "images": "/users_images/admin/pictures.json",
-            "lastActivity": 1464167910567
+            "lastActivity": 1464183228981
         },
         "nata": {
             "password": "123",
@@ -13,21 +13,21 @@
             "status": "Phrase with some philosophical sense",
             "avatar": "users_images\\nata\\картинка.jpg",
             "images": "/users_images/nata/pictures.json",
-            "lastActivity": 1464167927010
+            "lastActivity": 1464183262182
         },
         "sasha": {
             "password": "sasha",
             "name": "Alexsander",
             "avatar": "\\users_images\\sasha\\fyyOO93cvFg.jpg",
             "images": "/users_images/sasha/pictures.json",
-            "lastActivity": 1464165442681
+            "lastActivity": 1464183380361
         },
         "user": {
             "password": "123",
             "name": "Some User",
-            "avatar": "",
+            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
             "images": "/users_images/user/pictures.json",
-            "lastActivity": 1464166151775
+            "lastActivity": 1464183294102
         }
     },
     "lastId": 0
