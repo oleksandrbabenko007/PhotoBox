@@ -1,37 +1,23 @@
-[
-	{
-		"id": "919",
-		"src": "/users_images/nata/B0wi50-z80I.jpg",
-		"descr": "hm",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "375",
-		"src": "/users_images/nata/I6P6h3nFRTk.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "830",
-		"src": "/users_images/nata/eFv3tZTzq1E.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "966",
-		"src": "/users_images/nata/hiiO-E3jkgQ.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	},
-	{
-		"id": "200",
-		"src": "/users_images/nata/E9NghNcycm4.jpg",
-		"descr": "",
-		"category": "category1",
-		"private": false
-	}
-]
+{
+    "data": {
+        "1": {
+            "src": "users_images\\nata\\1.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "2": {
+            "src": "users_images\\nata\\B0wi50-z80I.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "3": {
+            "src": "users_images\\nata\\E9NghNcycm4.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
+    },
+    "lastId": 3
+}

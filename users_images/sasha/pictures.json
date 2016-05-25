@@ -1,23 +1,11 @@
-[
-    {
-        "id": "673",
-        "src": "/users_images/sasha/eFv3tZTzq1E.jpg",
-        "descr": "",
-        "category": "category1",
-        "private": false
+{
+    "data": {
+        "1": {
+            "src": "users_images\\sasha\\fyyOO93cvFg.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
     },
-    {
-        "id": "405",
-        "src": "/users_images/sasha/hiiO-E3jkgQ.jpg",
-        "descr": "",
-        "category": "category1",
-        "private": false
-    },
-    {
-        "id": "626",
-        "src": "\\users_images\\sasha\\I6P6h3nFRTk.jpg",
-        "descr": "",
-        "category": "category1",
-        "private": false
-    }
-]
+    "lastId": 1
+}
