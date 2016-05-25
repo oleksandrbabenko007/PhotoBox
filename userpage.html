@@ -14,15 +14,7 @@
 <body>
 
     <div class="container-fluid">
-        <div class="row">
-            <a href="http://localhost:8081/userpage.html?user=nata" class="col-xs-2">http://localhost:8081/userpage.html?user=nata</a>
-            <a href="http://localhost:8081/userpage.html?user=sasha" class="col-xs-2">http://localhost:8081/userpage.html?user=sasha</a>
-            <a href="http://localhost:8081/userpage.html?user=admin" class="col-xs-2">http://localhost:8081/userpage.html?user=admin</a>
-            <a href="http://localhost:8081/userpage.html?user=user" class="col-xs-2">http://localhost:8081/userpage.html?user=user</a>
-            <a href="http://localhost:8081/userpage.html?user=cvsdvsd" class="col-xs-2">http://localhost:8081/userpage.html?user=cvsdvsd</a>
-            <a href="http://localhost:8081/userpage.html?vdfvdfv" class="col-xs-2">http://localhost:8081/userpage.html?vdfvdfv</a>
-        </div>
-               <header class="row">
+        <header class="row">
             <div class="col-xs-11">
                 <h1 class="logo"><a href="userpage.html">
                     <img src="image/logo.png" alt="" class="logo-img img-responsive" >
@@ -39,20 +31,27 @@
                 <div class="col-xs-2 avatar">
                     <form name = "avatar" action="/changeAvatar" method="post" enctype="multipart/form-data" >
                         <input type="file" name="avatar" id="chooseAvatar" onchange='this.form.submit();' required="" />
-                        </form> 
-                        <div id = "textChange"><h1>Change</h1></div>
-                        </div>
-                        <div class="col-xs-10 col-sm-7">
-                            <h2 class="gray666 username"><strong></strong></h2>
-                            <p class="status"></p>
-                        </div>
+                    </form> 
+                    <div id = "textChange"><h1>Change</h1></div>
+                </div>
+                <div class="col-xs-10 col-sm-7">
+                    <h2 class="gray666 username"><strong></strong></h2>
+                    <p class="status"></p>
+                </div>
 
-                        <div class="col-xs-12 col-sm-3">
-                            <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
-                        </div>
-                    </div>
-            <div class="row image-list center-block">
+                <div class="col-xs-12 col-sm-3">
+                    <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
+                </div>
             </div>
+            <div class="row">
+                <div class="col-xs-10 image-list center-block">
+                </div>
+                <div class="col-xs-2">
+                    <ul class="list-group users-list">
+                    </ul>
+              </div>
+            </div>
+            
         </div>
         <footer>
             <div class="row">

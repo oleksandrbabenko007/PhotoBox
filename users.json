@@ -4,14 +4,13 @@
             "password": "admin",
             "name": "Administrator",
             "avatar": "users_images\\admin\\fyyOO93cvFg.jpg",
-            "images": "/users_images/admin/pictures.json",
-            "login": "admin"
+            "images": "/users_images/admin/pictures.json"
         },
         "nata": {
             "password": "123",
             "name": "Nataly SomeSurname",
             "status": "Phrase with some philosophical sense",
-            "avatar": "users_images/nata/main.jpg",
+            "avatar": "users_images\\nata\\картинка.jpg",
             "images": "/users_images/nata/pictures.json"
         },
         "sasha": {

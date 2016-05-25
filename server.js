@@ -25,6 +25,7 @@ app.post('/login', function(req, res) {
     if (isUser(user, userStorage.getAll())) {
         req.session.loggedUser = userStorage.findByKey(user.login);
         req.session.loggedUser.login = user.login;
+        delete req.session.loggedUser.password;
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
@@ -42,7 +43,9 @@ app.post('/changeAvatar', function(req, res) {
         file.pipe(fstream);
 
         loggedUser.avatar = path.join('users_images', loggedUser.login, filename);
-        userStorage.update(loggedUser, loggedUser.login);
+        var updUser = userStorage.findByKey(loggedUser.login);
+        updUser.avatar = loggedUser.avatar;
+        userStorage.update(updUser, loggedUser.login);
 
         fstream.on('close', function() {
             res.redirect('/userpage.html');

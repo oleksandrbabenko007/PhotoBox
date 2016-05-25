@@ -5,22 +5,17 @@
     right: 0;
     -webkit-transition: opacity 300ms ease-in-out 300ms;
 }
-
 .thumbnail:hover .glyphicon {
     display: block;
     opacity: 1;
-
 }
-
 .img-circle{
     opacity: 1;
     -webkit-transition: opacity 300ms ease-in-out 300ms;
 }
-
 .img-circle:hover{
     opacity: 0.5;
 }
-
 div#textChange {
     display: none;
     position: absolute;
@@ -29,19 +24,15 @@ div#textChange {
     width: 100%;
     text-align: center;
 }
-
 .openmodal{
     cursor: pointer;
 }
-
 img.img-responsive.img-circle {
     cursor: pointer;
 }
-
 #chooseAvatar{
     opacity: 0;
 }
-
 body {
     min-width: 320px;
 }
@@ -57,7 +48,6 @@ header {
     font-size: 50px;
     font-weight: bold;
 }
-
 .logo-img {
     height: 50px;
     float: left;
@@ -76,6 +66,20 @@ header {
 .thumbnail {
     display: inline-block;
     position: relative;
+}
+.list-group {margin-top: 20px;}
+.users-list a {
+    display: inline-block;
+    width: 100%;
+}
+.green-circle {
+    display: inline-block;
+    float: right;
+    margin: 5px 0;
+    width: 5px;
+    height: 5px;
+    background: green;
+    border-radius: 50%;
 }
 @media (min-width: 450px) {
     .image-list {
