@@ -30,6 +30,8 @@ app.post('/login', function(req, res) {
     } else {
         res.redirect('back');
     }
+    setCurrentUserTime(req.session.loggedUser);
+
     res.end();
 });
 
@@ -51,6 +53,7 @@ app.post('/changeAvatar', function(req, res) {
             res.redirect('/userpage.html');
         });
     });
+    setCurrentUserTime(loggedUser);
     req.pipe(req.busboy);
 });
 
@@ -90,6 +93,7 @@ app.post('/fileupload', function(req, res) {
         newPhoto.private = fields.privateFoto ? true : false;
         imagesJson.insert(newPhoto);
     });
+    setCurrentUserTime(loggedUser);
     req.pipe(req.busboy);
 });
 
@@ -99,6 +103,7 @@ app.post('/remove_photo', function(req, res) {
     var pathToPrictureJson = path.join(__dirname, 'users_images', loggedUser.login, 'pictures.json');
     var imagesJson = new Storage(pathToPrictureJson);
     imagesJson.delete(remPhotoID);
+    setCurrentUserTime(loggedUser);
     res.send({status: 'okay'});
 });
 
@@ -116,13 +121,35 @@ app.get('/user_page', function(req, res) {
             res.send([userStorage.findByKey(req.query.user), false]);
         }
     }
+    setCurrentUserTime(loggedUser);
     res.send([loggedUser, true]);
     res.end();
 });
 
 app.get('/logout', function(req, res) {
+    setCurrentUserTime(req.session.loggedUser);
     req.session.reset();
     res.redirect('/index.html');
+});
+
+app.get('/usersActivity', function(req, res) {
+    var usersActivity = {};
+    var newDate = new Date().getTime();
+    var users = userStorage.getAll();
+    for (var userKey in users) {
+        var oldDate = users[userKey].lastActivity;
+        var diff = newDate - oldDate;
+        var diffDate = new Date(diff).getMinutes();
+        usersActivity[userKey] = {};
+        usersActivity[userKey].name = users[userKey].name;
+        if (diffDate < 2) {
+            usersActivity[userKey].online = true; 
+        }
+        else { 
+            usersActivity[userKey].online = false;
+        }
+    }
+    res.send(usersActivity);
 });
 
 var server = app.listen(8081, 'localhost', function() {
@@ -136,4 +163,11 @@ function isUser(user, users) {
         return false;
     }
     return user.password === users[user.login].password;
+}
+
+function setCurrentUserTime(loggedUser) {
+    var curenlyTime = new Date().getTime();
+    var newObjUser = userStorage.findByKey(loggedUser.login);
+    newObjUser.lastActivity = curenlyTime;
+    userStorage.update(newObjUser, loggedUser.login);
 }
