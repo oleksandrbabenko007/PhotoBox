@@ -120,8 +120,7 @@ app.get('/user_page', function(req, res) {
             res.send([userStorage.findByKey(req.query.user), false]);
         }
     } else {
-          res.send([loggedUser, true]);
-  
+        res.send([loggedUser, true]);
     }
 
     setCurrentUserTime(loggedUser);
