@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
     <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="app.js"></script>
     <script src="photo-box.module.js"></script>
     <script src="users.controller.js"></script>
 </head>
 <body ng-app="photo-box">
 
-    <div class="container-fluid">
+    <div class="container-fluid" ng-app="myApp">
         <header class="row">
-            <div class="col-xs-11">
+            <div class="col-xs-11" >
                 <h1 class="logo"><a href="userpage.html">
                     <img src="image/logo.png" alt="" class="logo-img img-responsive" >
                     Photo Box
@@ -41,16 +41,22 @@
                     <h2 class="gray666 username"><strong></strong></h2>
                     <p class="status"></p>
                 </div>
-
                 <div class="col-xs-12 col-sm-3">
                     <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-10 image-list center-block">
-                </div>
+            <div class="row" ng-controller="imageListController">
+                <div class="col-xs-10 image-list center-block" >
+                    <div ng-repeat="(key, value) in imageList" class="wrapperImage" ng-hide={{show}}>
+                    <span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" ng-click="deleteImage($event , key)"></span>
+                    <a  class ='thumbnail fancybox' rel='group' href={{value.src}} >
+                       <img ng-src={{value.src}} class="img-responsive openmodal">
+                       <div class="caption">{{image.descr}}</div>       
+                   </a></div>
+               </div>
                 <div class="col-xs-2" ng-controller="UserListController">
-                    <ul class="list-group users-list">
+                    <ul class="list-group users-list" >
+
                         <li class="list-group-item" ng-repeat="(key, user) in users">
                             <a ng-href={{'?user='+key}}>
                                 {{user.name}}
@@ -65,7 +71,7 @@
         <footer>
             <div class="row">
                 <div class="col-xs-3">
-                    2016 Copyright by ...
+                 2016 Copyright by ...
                 </div>
             </div>
         </footer>

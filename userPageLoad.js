@@ -19,35 +19,6 @@ $(function() {
         $('.username').find('strong').text(res.name);
         $('.status').text(res.status);
         $('<img/>', {src: res.avatar, class: 'img-responsive img-circle'}).appendTo('.avatar'); 
-        $.get(res.images, displayImages);
-    });
-
-    function displayImages(res) {
-        var images = res.data;
-        var galery = $('.image-list');
-        var link;
-        for (var image in images) {
-            link = $('<a>', {class: 'thumbnail fancybox', rel: 'group', href: images[image].src}).appendTo(galery);
-            if (guest == false) {
-                link.append('<span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" value="' + image + '"></span>');
-            }
-            link.append('<img src="' + images[image]['src'] + '" class="img-responsive openmodal">');
-            link.append('<div class="caption">' + images[image]['descr'] + '</div>');
-        }
-    }
-
-    $('.image-list').on('click', '.remove-photo', function(event) {
-        event.preventDefault();
-        if (guest) {
-            return;
-        }
-        var image = $(this).parent().removeClass('fancybox');
-        var imageID = {id: $(this).attr('value')};
-        $.post('/remove_photo', imageID, function(res) {
-            if (res.status) {
-                image.remove();
-            }
-        });
     });
 
     if (guest == false) {

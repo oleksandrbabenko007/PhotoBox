@@ -18,6 +18,7 @@ app.use(express.static('.'));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.json());
 
 app.post('/login', function(req, res) {
     var user = req.body.credentials;
@@ -30,8 +31,6 @@ app.post('/login', function(req, res) {
     } else {
         res.redirect('back');
     }
-    setCurrentUserTime(req.session.loggedUser);
-
     res.end();
 });
 
@@ -98,6 +97,7 @@ app.post('/fileupload', function(req, res) {
 });
 
 app.post('/remove_photo', function(req, res) {
+    console.log(req.body.id);
     var loggedUser = req.session.loggedUser;
     var remPhotoID = req.body.id;
     var pathToPrictureJson = path.join(__dirname, 'users_images', loggedUser.login, 'pictures.json');
@@ -109,7 +109,6 @@ app.post('/remove_photo', function(req, res) {
 
 app.get('/user_page', function(req, res) {
     var loggedUser = req.session.loggedUser;
-
     if (!req.session.loggedUser) {
         res.send({error: 'not logged in'});
         return;
@@ -121,7 +120,8 @@ app.get('/user_page', function(req, res) {
             res.send([userStorage.findByKey(req.query.user), false]);
         }
     } else {
-        res.send([loggedUser, true]);
+          res.send([loggedUser, true]);
+  
     }
 
     setCurrentUserTime(loggedUser);
@@ -135,22 +135,24 @@ app.get('/logout', function(req, res) {
 });
 
 app.get('/usersActivity', function(req, res) {
+    var loggedUser = req.session.loggedUser;
     var usersActivity = {};
     var newDate = new Date().getTime();
     var users = userStorage.getAll();
     for (var userKey in users) {
-        var oldDate = users[userKey].lastActivity;
-        var diff = newDate - oldDate;
-        var diffDate = new Date(diff).getMinutes();
-        usersActivity[userKey] = {};
-        usersActivity[userKey].name = users[userKey].name;
-        if (diffDate < 2) {
-            usersActivity[userKey].online = true; 
-        }
-        else { 
-            usersActivity[userKey].online = false;
-        }
-    }
+        if (users[userKey].name !== loggedUser.name) {
+            var oldDate = users[userKey].lastActivity;
+            var diff = newDate - oldDate;
+            var diffDate = new Date(diff).getMinutes();
+            usersActivity[userKey] = {};
+            usersActivity[userKey].name = users[userKey].name;
+            if (diffDate < 2) {
+                usersActivity[userKey].online = true; 
+            }
+            else { 
+                usersActivity[userKey].online = false;
+            }
+        } }
     res.send(usersActivity);
 });
 
