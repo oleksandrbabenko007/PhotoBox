@@ -22,21 +22,6 @@ $(function() {
         $.get(res.images, displayImages);
     });
 
-    function displayUsersList() {
-        $.get('/usersActivity', function(res) {
-            $('.users-list').html('');
-            for (var user in res) {
-                $('.users-list').append('<li class="list-group-item">' +
-                    '<a href="' + ('?user=' + user) + '">' +
-                    res[user].name +
-                    (res[user].online ? '<span class="green-circle"></span>' : '') +
-                    '</a></li>');
-            }
-        });
-    }
-    displayUsersList();
-    setInterval(displayUsersList, 5000);
-
     function displayImages(res) {
         var images = res.data;
         var galery = $('.image-list');
