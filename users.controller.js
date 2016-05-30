@@ -32,7 +32,3 @@
         });
     }
 })();
-
-// dependency injection - $http (inversion of control, hollywood principle)
-// controller as and $scope
-// promices , then, catch, finally $q !== Promise
