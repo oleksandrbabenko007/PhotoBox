@@ -46,7 +46,7 @@ JsonStorage.prototype.update = function(entity, key) {
 
 JsonStorage.prototype.insert = function(entity, key) {
     if (typeof key == 'undefined') {
-        key = +(this.jsonData.lastId) + 1;
+        key = parseInt(this.jsonData.lastId) + 1;
     }
     if (typeof this.data[key] !== 'undefined') {
         throw new Error(`Insert error: entity with key ${key} already exists`);

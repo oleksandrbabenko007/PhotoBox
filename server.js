@@ -97,7 +97,6 @@ app.post('/fileupload', function(req, res) {
 });
 
 app.post('/remove_photo', function(req, res) {
-    console.log(req.body.id);
     var loggedUser = req.session.loggedUser;
     var remPhotoID = req.body.id;
     var pathToPrictureJson = path.join(__dirname, 'users_images', loggedUser.login, 'pictures.json');
@@ -122,7 +121,6 @@ app.get('/user_page', function(req, res) {
     } else {
         res.send([loggedUser, true]);
     }
-
     setCurrentUserTime(loggedUser);
     res.end();
 });
@@ -139,19 +137,19 @@ app.get('/usersActivity', function(req, res) {
     var newDate = new Date().getTime();
     var users = userStorage.getAll();
     for (var userKey in users) {
-        if (users[userKey].name !== loggedUser.name) {
-            var oldDate = users[userKey].lastActivity;
-            var diff = newDate - oldDate;
-            var diffDate = new Date(diff).getMinutes();
-            usersActivity[userKey] = {};
-            usersActivity[userKey].name = users[userKey].name;
-            if (diffDate < 2) {
-                usersActivity[userKey].online = true; 
-            }
-            else { 
-                usersActivity[userKey].online = false;
-            }
-        } }
+        if (users[userKey].name == loggedUser.name) continue;
+        var oldDate = users[userKey].lastActivity;
+        var diff = newDate - oldDate;
+        var diffDate = new Date(diff).getMinutes();
+        usersActivity[userKey] = {};
+        usersActivity[userKey].name = users[userKey].name;
+        if (diffDate < 2) {
+            usersActivity[userKey].online = true; 
+        }
+        else {
+            usersActivity[userKey].online = false;
+        }
+    }
     res.send(usersActivity);
 });
 

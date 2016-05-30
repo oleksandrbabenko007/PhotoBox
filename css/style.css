@@ -1,6 +1,5 @@
 .glyphicon{
     position: absolute;
-    /*opacity: 0;*/
     top: 0;
     right: 0;
     -webkit-transition: opacity 300ms ease-in-out 300ms;
