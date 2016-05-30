@@ -3,7 +3,12 @@
 
     angular
         .module('photo-box')
-        .controller('UserListController', UserListController);
+        .controller('UserListController', UserListController)
+        .directive('userList', function() {
+            return {
+                templateUrl: 'user-list.html'
+            };
+        });
 
     function UserListController($scope, $http, $interval) {
         $scope.users = {};

@@ -31,6 +31,12 @@ app.post('/login', function(req, res) {
     } else {
         res.redirect('back');
     }
+<<<<<<< 4aee2666b44e953fa5dda5481a60c41a7167d6ef
+=======
+
+    setCurrentUserTime(req.session.loggedUser);
+
+>>>>>>> adda directive user-list.html
     res.end();
 });
 
@@ -145,8 +151,12 @@ app.get('/usersActivity', function(req, res) {
         usersActivity[userKey].name = users[userKey].name;
         if (diffDate < 2) {
             usersActivity[userKey].online = true; 
+<<<<<<< 4aee2666b44e953fa5dda5481a60c41a7167d6ef
         }
         else {
+=======
+        } else {
+>>>>>>> adda directive user-list.html
             usersActivity[userKey].online = false;
         }
     }
