@@ -4,9 +4,9 @@
     angular
         .module('photo-box')
         .controller('UserListController', UserListController)
-        .directive('userList', function() {
+        .directive('usersList', function() {
             return {
-                templateUrl: 'user-list.html'
+                templateUrl: 'users-list.html'
             };
         });
 
@@ -18,7 +18,7 @@
 
         function activate() {
             displayUserList();
-            stop = $interval(displayUserList, 5000);
+            stop = $interval(displayUserList, 30000);
         }
 
         function displayUserList() {
