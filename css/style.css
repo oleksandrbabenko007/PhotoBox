@@ -145,9 +145,7 @@ header {
 #error {
     display: none;
 }
-/*.thumbnail .fancybox{
-}
-*/
+
 .glyphicon-remove {
     padding: 10px;
     color: red;
@@ -156,7 +154,7 @@ header {
     z-index: 99;
 }
 
-.fancybox-opened .fancybox-skin {
+/*.fancybox-opened .fancybox-skin {
     box-shadow: none;
     background: transparent;
-}
+}*/

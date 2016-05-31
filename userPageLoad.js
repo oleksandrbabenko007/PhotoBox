@@ -35,8 +35,8 @@ $(function() {
 
     $(".fancybox").fancybox({
         openEffect: 'fade',
-        openSpeed: 'slow',
+        openSpeed: 'fast',
         closeEffect: 'fade',
-        closeSpeed: 'slow'
+        closeSpeed: 'fast'
     });
 });
