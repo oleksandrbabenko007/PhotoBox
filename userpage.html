@@ -47,12 +47,7 @@
             </div>
             <div class="row" ng-controller="imageListController">
                 <div class="col-xs-10 image-list center-block" >
-                    <div ng-repeat="(key, value) in imageList" class="wrapperImage" ng-hide={{show}}>
-                    <span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" ng-click="deleteImage($event , key)"></span>
-                    <a  class ='thumbnail fancybox' rel='group' href={{value.src}} >
-                       <img ng-src={{value.src}} class="img-responsive openmodal">
-                       <div class="caption">{{image.descr}}</div>       
-                   </a></div>
+                    <list-images></list-images>
                </div>
                 <div class="col-xs-2" ng-controller="UserListController">
                     <ul class="list-group users-list" >
