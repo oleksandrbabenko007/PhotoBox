@@ -1,0 +1,23 @@
+{
+  "name": "photo-box",
+  "description": "PhotoBox",
+  "main": "index.html",
+  "authors": [
+    "aleksandrbabenko <oleksandr.o.babenko@globallogic.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/oleksandrbabenko007/PhotoBox",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.4",
+    "angular": "^1.5.6",
+    "bootstrap": "^3.3.6",
+    "fancybox": "^2.1.5"
+  }
+}
