@@ -45,34 +45,17 @@
                     <button type="button" class="btn btn-block btn-lg btn-success btn-login" data-toggle="modal" data-target="#modal">Add photo</button>
                 </div>
             </div>
-<<<<<<< 4aee2666b44e953fa5dda5481a60c41a7167d6ef
+
             <div class="row" ng-controller="imageListController">
                 <div class="col-xs-10 image-list center-block" >
                     <list-images></list-images>
-               </div>
+                </div>
                 <div class="col-xs-2" ng-controller="UserListController">
                     <ul class="list-group users-list" >
-
-                        <li class="list-group-item" ng-repeat="(key, user) in users">
-                            <a ng-href={{'?user='+key}}>
-                                {{user.name}}
-                                <span class="green-circle" ng-if="user.online"></span>   <!-- ng-show, ng-hide -->
-                            </a>
-                        </li>
-=======
-            <div class="row">
-                <div class="col-xs-10 image-list center-block">
-
-                </div>
-
-                <div class="col-xs-2" ng-controller="UserListController">
-                    <ul class="list-group users-list" user-list>
-                       <user-list></user-list>
->>>>>>> adda directive user-list.html
+                        <users-list></users-list>
                     </ul>
                 </div>
             </div>
-            
         </div>
         <footer>
             <div class="row">

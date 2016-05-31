@@ -27,16 +27,11 @@ app.post('/login', function(req, res) {
         req.session.loggedUser = userStorage.findByKey(user.login);
         req.session.loggedUser.login = user.login;
         delete req.session.loggedUser.password;
+        setCurrentUserTime(req.session.loggedUser);
         res.redirect('/userpage.html');
     } else {
         res.redirect('back');
     }
-<<<<<<< 4aee2666b44e953fa5dda5481a60c41a7167d6ef
-=======
-
-    setCurrentUserTime(req.session.loggedUser);
-
->>>>>>> adda directive user-list.html
     res.end();
 });
 
@@ -146,17 +141,12 @@ app.get('/usersActivity', function(req, res) {
         if (users[userKey].name == loggedUser.name) continue;
         var oldDate = users[userKey].lastActivity;
         var diff = newDate - oldDate;
-        var diffDate = new Date(diff).getMinutes();
+        var diffDate = Math.floor(diff / (1000 * 60));
         usersActivity[userKey] = {};
         usersActivity[userKey].name = users[userKey].name;
         if (diffDate < 2) {
-            usersActivity[userKey].online = true; 
-<<<<<<< 4aee2666b44e953fa5dda5481a60c41a7167d6ef
-        }
-        else {
-=======
+            usersActivity[userKey].online = true;
         } else {
->>>>>>> adda directive user-list.html
             usersActivity[userKey].online = false;
         }
     }
