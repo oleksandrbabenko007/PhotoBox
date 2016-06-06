@@ -1,0 +1,26 @@
+{
+  "name": "photo-box",
+  "version": "1.0",
+  "dependencies": {
+    "bootstrap": "3.3.6",
+    "jquery": "~1.10.2",
+    "fancybox": "^2.1.5",
+    "angular": "1.5.5",
+    "angular-medium-editor": "^1.1.1"
+  },
+  "private": true,
+  "homepage": "https://github.com/oleksandrbabenko007/PhotoBox",
+  "authors": [
+    "natahin <natalia.stuchynska@globallogic.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

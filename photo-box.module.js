@@ -2,5 +2,5 @@
     'use strict';
 
     angular
-        .module('photo-box', []);
+        .module('photo-box', ['angular-medium-editor']);
 })();
