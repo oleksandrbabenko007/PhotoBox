@@ -1,6 +1,6 @@
 <div ng-repeat="(key, value) in imageList" class="wrapperImage">
     <span class="glyphicon glyphicon-remove remove-photo" aria-hidden="true" ng-click="deleteImage($event , key)" ng-show={{show}}></span>
-    <a  class ='thumbnail fancybox' rel='group' href={{value.src}} >
+    <a  class ='thumbnail fancybox' title="{{value.descr}}" rel='group' href={{value.src}} >
         <img ng-src={{value.src}} class="img-responsive openmodal">
         <div class="caption">{{value.descr}}</div>       
     </a>
