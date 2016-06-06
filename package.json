@@ -14,7 +14,8 @@
     "client-sessions": "*",
     "connect-busboy": "*",
     "mkdirp": "*",
-    "file-exists": "*"
+    "file-exists": "*",
+    "bower": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
