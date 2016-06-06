@@ -9,12 +9,12 @@
     "eslint-plugin-jasmine": "^1.8.1"
   },
   "dependencies": {
-    "express": "4.2.x",
     "body-parser": "*",
     "client-sessions": "*",
     "connect-busboy": "*",
-    "mkdirp": "*",
-    "file-exists": "*"
+    "express": "4.2.x",
+    "file-exists": "*",
+    "mkdirp": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
