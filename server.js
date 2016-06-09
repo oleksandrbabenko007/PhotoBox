@@ -20,6 +20,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.post('/sendMessage', function (res,req) {
+    console.log(res.body);
+});
+
 app.post('/login', function(req, res) {
     var user = req.body.credentials;
 
