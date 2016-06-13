@@ -17,14 +17,8 @@
             listChatMessages();
             $interval(listChatMessages, 1000);
         }
-
-        $http.get('/dialogsList')
-            .then(function (response) {
-                $scope.usersMassive = response.data;
-                console.log($scope.usersMassive);
-            });
-
-        $scope.submitUser = function () {
+        
+        $scope.submitUser = function() {
             var req = {userSelect: $scope.userChat};
 
             $http.post('/sendSelectUser', req)
@@ -47,17 +41,26 @@
         };
 
         $http.get('/usersActivity')
-            .then(function (response) {
+            .then(function(response) {
                 $scope.users = response.data;
                 console.log($scope.users);
             })
-            .catch(function (response) {
+            .catch(function(response) {
                 console.log(response);
-            });
-
+            })
+        ;
+        
+        $http.get('/dialogsList')
+            .then(function (response) {
+                $scope.usersMassive = response.data;
+                console.log($scope.usersMassive);
+            })
+        ;
+        
         function listChatMessages() {
-            return $http.get('/dataFromDataBase')
-                .then(function (response) {
+            var reqUrl = window.location.search || '';
+            return $http.get('/dataFromDataBase' + reqUrl)
+                .then(function(response) {
                     $scope.usersMessage = response.data;
                 });
         }
