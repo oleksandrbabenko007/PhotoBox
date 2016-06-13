@@ -11,66 +11,63 @@
 </head>
 <body ng-app="photo-box">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="row">
-                    <div class="col-xs-10">
-                            <a class="navbar-brand" href="/userpage.html">PhotoBox</a>
-                    </div>
-                    <div class="col-xs-2">
-                        <a class="glyphicon glyphicon-off navbar-brand" href="/userpage.html"></a>
-                    </div>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-10">
+                <a class="navbar-brand" href="/userpage.html">PhotoBox</a>
+            </div>
+            <div class="col-xs-2">
+                <a class="glyphicon glyphicon-off navbar-brand" href="/userpage.html"></a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="container" ng-controller="usersChatPageController">
+<div class="container" ng-controller="usersChatPageController">
 
     <div class="row">
 
-    <div class="col-md-3">
-        <form class="form-signin" action="/sendSelectUser" method="POST">
-            <div class="form-group" >
-            <select class="form-control" name="userNames" id="Users">
-                <option value="" disabled selected>Write to...</option>
-                <option ng-repeat="user in users" >{{user.name}}</option>
-            </select>
-            <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
-            </div>
-        </form>
-        <p class="lead">Users</p>
+        <div class="col-md-3">
+            <form class="form-signin" ng-submit="submitUser()" >
+                <div class="form-group">
+                    <select class="form-control" ng-model="userChat" id="Users">
+                        <option value="" disabled selected>Write to...</option>
+                        <option ng-repeat="user in users">{{user.name}}</option>
+                    </select>
+                    <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
+                </div>
+            </form>
+            <p class="lead">Users</p>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="dialoge in testMassive">
                     <a href="#">
                         <span class="badge">{{dialoge.notread}}</span>
-                            <em ng-repeat="(key, value) in dialoge.paricipants"> {{value}}</em>
+                        <em ng-repeat="(key, value) in dialoge.paricipants"> {{value}}</em>
                         <span class="glyphicon glyphicon-envelope messegeLabel"></span>
                     </a>
                 </li>
             </ul>
-    </div>
-
-    <div class="col-md-9">
-        <div class="thumbnail" style="height: 500px; overflow-y: scroll">
         </div>
-        <form class="form-signin" action="/sendMessage" method="POST">
-        <div  class="thumbnail row wrapSent">
-            <textarea name="messageFromUser" class="col-xs-10" name="" id="" cols="80" rows="4"></textarea>
-            <button class="btn btn-primary col-xs-2 btnSent" type="submit"><span class="glyphicon glyphicon-send"></span></button>
+
+        <div class="col-md-9">
+            <div class="thumbnail windowChat">
+                <div ng-repeat="(key, value) in usersMessage" class="showString">
+                    <h5>{{value.author}} : {{value.message}}</h5>
+                    <span class="glyphicon glyphicon-remove deleteMessage" ng-click="deleteMessage($event, value.idMessage)"></span>
+                </div>
+            </div>
+            <form class="form-signin" ng-submit="submit()">
+                <div class="thumbnail row wrapSent">
+                    <textarea ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4"></textarea>
+                    <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" />
+                </div>
+            </form>
+
         </div>
-        </form>
+
     </div>
-
 </div>
-
-</div>
-<!--<footer>-->
-    <!--<div class="row">-->
-        <!--<div class="col-lg-12">-->
-            <!--<p>Copyright by...&copy;</p>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</footer>-->
 <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -28,3 +28,21 @@ body {
 float: right;
 margin-right: 15px;
 }
+
+.deleteMessage{
+ float: right;
+}
+ div>h5 {
+     width: 90%;
+     float: left;
+ }
+
+.showString:hover  {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.windowChat{
+    height: 500px;
+    overflow-y: scroll;
+}
