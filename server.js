@@ -159,7 +159,6 @@ app.get('/usersActivity', function(req, res) {
     res.send(usersActivity);
 });
 
-
 app.get('/dialogsList', function(req, res) {
     if (!req.session.loggedUser) {
         res.send({error: 'not logged in'});
@@ -173,7 +172,6 @@ app.get('/dialogsList', function(req, res) {
 });
 
 app.post('/sendMessage', function(req, res) {
-    
     var loggedUser = req.session.loggedUser;
     var sqlExpression = "INSERT INTO Messages (chatId, message, sentAtTime, author) VALUES (?, ?, ?, ?)";
 
@@ -191,10 +189,10 @@ app.post('/sendMessage', function(req, res) {
 });
 
 app.post('/sendSelectUser', function(req, res) {
-    console.log(req.body);
     res.end();
 });
 
+// todo sqlRequest
 app.get('/dataFromDataBase', function(req, res) {
     db.all("SELECT message, author, idMessage FROM Messages WHERE chatId=" + req.query.chat)
     .then(function(rows) {
@@ -238,40 +236,40 @@ function getUserDialogList(login) {
     var dialogs;
 
     return db.all(selectDialogsList)
-        .then(function (rows) {
-            var countMessPromises = [];
-            var selectPartisipantsPromises = [];
-            dialogs = rows;
+    .then(function(rows) {
+        var countMessPromises = [];
+        var selectPartisipantsPromises = [];
+        dialogs = rows;
 
-            for (var i = 0; i < rows.length; i++) {
-                var selectCountMess = "SELECT chatId, count(message) FROM Messages WHERE sentAtTime > " + rows[i].lastVisit + " AND chatId = " + rows[i].id + ";";
-                countMessPromises.push(db.get(selectCountMess));
+        for (var i = 0; i < rows.length; i++) {
+            var selectCountMess = "SELECT chatId, count(message) FROM Messages WHERE sentAtTime > " + rows[i].lastVisit + " AND chatId = " + rows[i].id + ";";
+            countMessPromises.push(db.get(selectCountMess));
 
-                var selectPartisipants = "SELECT chatId, userLogin FROM Chat_partisipants WHERE chatId = " + rows[i].id + " AND userLogin <> '" + login + "';";
-                selectPartisipantsPromises.push(db.all(selectPartisipants));
-            }
-            return Promise.all([Promise.all(countMessPromises), Promise.all(selectPartisipantsPromises)]);
-        })
-        .then(function (res) {
-            var counts = res[0];
-            var partisipants = res[1];
+            var selectPartisipants = "SELECT chatId, userLogin FROM Chat_partisipants WHERE chatId = " + rows[i].id + " AND userLogin <> '" + login + "';";
+            selectPartisipantsPromises.push(db.all(selectPartisipants));
+        }
+        return Promise.all([Promise.all(countMessPromises), Promise.all(selectPartisipantsPromises)]);
+    })
+    .then(function(res) {
+        var counts = res[0];
+        var partisipants = res[1];
 
-            for (var i = 0; i < dialogs.length; i++) {
-                for (var j = 0; j < counts.length; j++) {
-                    if (dialogs[i].id === counts[j].chatId) {
-                        dialogs[i].notread = counts[j]["count(message)"];
-                        break;
-                    } else {
-                        dialogs[i].notread = 0;
-                    }
+        for (var i = 0; i < dialogs.length; i++) {
+            for (var j = 0; j < counts.length; j++) {
+                if (dialogs[i].id === counts[j].chatId) {
+                    dialogs[i].notread = counts[j]["count(message)"];
+                    break;
+                } else {
+                    dialogs[i].notread = 0;
                 }
-                dialogs[i].partisipants = findPartisipants(partisipants, dialogs[i].id);
             }
-            return (dialogs);
-        })
-        .catch(function (err) {
-            throw err;
-        });
+            dialogs[i].partisipants = findPartisipants(partisipants, dialogs[i].id);
+        }
+        return (dialogs);
+    })
+    .catch(function(err) {
+        throw err;
+    });
 }
 
 function findPartisipants(partisipants, id) {

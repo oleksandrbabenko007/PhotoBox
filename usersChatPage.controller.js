@@ -17,14 +17,10 @@
             listChatMessages();
             $interval(listChatMessages, 1000);
         }
-        
+
         $scope.submitUser = function() {
             var req = {userSelect: $scope.userChat};
-
-            $http.post('/sendSelectUser', req)
-                .then(
-                    console.log("Ok")
-                );
+            $http.post('/sendSelectUser', req);
         };
 
         $scope.submit = function () {
@@ -37,13 +33,13 @@
                 })
                 .catch(function (response) {
                     console.log(response);
-                });
+                })
+            ;
         };
 
-        $http.get('/usersActivity')
+        $http.get('/dialogsList')
             .then(function(response) {
-                $scope.users = response.data;
-                console.log($scope.users);
+                $scope.chats = response.data;
             })
             .catch(function(response) {
                 console.log(response);
@@ -56,7 +52,7 @@
                 console.log($scope.usersMassive);
             })
         ;
-        
+
         function listChatMessages() {
             var reqUrl = window.location.search || '';
             return $http.get('/dataFromDataBase' + reqUrl)
