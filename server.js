@@ -4,11 +4,15 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
 var busboy = require('connect-busboy');
-var sqlite3 = require('sqlite3').verbose();
-
+var qsql = require('q-sqlite3');
 var Storage = require('./json-storage.js');
-var db = new sqlite3.Database('./db/chat');
+
 var userStorage = new Storage('./users.json');
+var db = null;
+
+qsql.createDatabase('./db/chat').done(function(database) {
+    db = database;
+});
 
 var app = express();
 app.use(busboy());
@@ -155,43 +159,6 @@ app.get('/usersActivity', function(req, res) {
     res.send(usersActivity);
 });
 
-
-
-app.post('/sendMessage', function (req, res) {
-    var loggedUser = req.session.loggedUser;
-    db.serialize(function () {
-        var sqlExpression = "INSERT INTO Messages (chatId, message, sentAtTime, author) VALUES (?, ?, ?, ?)";
-        var stmt = db.prepare(sqlExpression);
-        var id = Math.floor((Math.random() * 100) + 1);      //todo right Id
-        var sentAtTime = new Date().getTime();
-        var message = req.body.message;
-        var author = loggedUser.name;
-        stmt.run(id, message, sentAtTime, author);
-        stmt.finalize();
-    });
-    res.end();
-});
-
-app.post('/sendSelectUser', function (req, res) {
-    console.log(req.body);
-    res.end();
-})
-
-app.get('/dataFromDataBase', function(req, res){
-    db.all("SELECT message, author, idMessage FROM Messages", function(err, rows) { //todo sqlRequest
-        res.type('json');
-        res.send(rows);
-    });
-});
-
-app.post('/deleteMessage', function (req, res) {
-    db.serialize(function () {
-        var stmt = db.prepare("DELETE FROM Messages WHERE idMessage = " +req.body.idDelete);
-        stmt.run();
-        stmt.finalize();
-    });
-    res.end()
-});
 
 app.get('/dialogsList', function(req, res) {
     if (!req.session.loggedUser) {

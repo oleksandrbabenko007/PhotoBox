@@ -18,17 +18,18 @@
             $interval(listChatMessages, 1000);
         }
 
-        $scope.testMassive = { 1: {
-                                 paricipants: ["nata", "alex"],
-                                 notread: 10
-                                 },
-                              2: {
-                             paricipants: ["kirill", "alex"],
-                                 notread: 5
-                                 }
-                             };
+        $scope.testMassive = {
+            1: {
+                paricipants: ["nata", "alex"],
+                notread: 10
+            },
+            2: {
+                paricipants: ["kirill", "alex"],
+                notread: 5
+            }
+        };
 
-        $scope.submitUser = function() {
+        $scope.submitUser = function () {
             var req = {userSelect: $scope.userChat};
 
             $http.post('/sendSelectUser', req)
@@ -37,7 +38,7 @@
                 );
         };
 
-        $scope.submit = function() {
+        $scope.submit = function () {
             var req = {message: $scope.text};
             $http.post('/sendMessage', req)
                 .then(function () {
@@ -49,18 +50,17 @@
         };
 
         $http.get('/usersActivity')
-            .then(function(response) {
+            .then(function (response) {
                 $scope.users = response.data;
                 console.log($scope.users);
             })
-            .catch(function(response) {
+            .catch(function (response) {
                 console.log(response);
             });
-    };
 
         function listChatMessages() {
             return $http.get('/dataFromDataBase')
-                .then(function(response) {
+                .then(function (response) {
                     $scope.usersMessage = response.data;
                 });
         }
