@@ -16,27 +16,28 @@
         function activate() {
             listChatMessages();
             $interval(listChatMessages, 1000);
-        };
+        }
 
-        $scope.testMassive = {1: {
-                             paricipants: ["nata", "alex"],
+        $scope.testMassive = { 1: {
+                                 paricipants: ["nata", "alex"],
                                  notread: 10
                                  },
-                              2: {
-                             paricipants: ["kirill", "alex"],
+                               2: {
+                                 paricipants: ["kirill", "alex"],
                                  notread: 5
                                  }
                              };
 
-        $scope.submitUser = function () {
+        $scope.submitUser = function() {
             var req = {userSelect: $scope.userChat};
+
             $http.post('/sendSelectUser', req)
                 .then(
                     console.log("Ok")
                 );
         };
-        
-        $scope.submit = function () {
+
+        $scope.submit = function() {
             var req = {message: $scope.text};
             $http.post('/sendMessage', req)
                 .then(function () {
@@ -58,10 +59,10 @@
 
         function listChatMessages() {
             return $http.get('/dataFromDataBase')
-                .then(function (response) {
+                .then(function(response) {
                     $scope.usersMessage = response.data;
                 });
-        };
+        }
 
         function deleteMessage($event, value) {
             $scope.value = value;
@@ -70,9 +71,6 @@
             var idMessageDelete = {idDelete: value};
             $http.post('/deleteMessage', idMessageDelete);
             listChatMessages();
-        };
-
-    };
-
-
+        }
+    }
 })();
