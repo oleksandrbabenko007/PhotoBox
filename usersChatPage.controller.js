@@ -18,23 +18,27 @@
             $interval(listChatMessages, 1000);
         }
 
-        $scope.testMassive = { 1: {
-                                 paricipants: ["nata", "alex"],
-                                 notread: 10
-                                 },
-                               2: {
-                                 paricipants: ["kirill", "alex"],
-                                 notread: 5
-                                 }
-                             };
+        $http.get('/usersActivity')
+            .then(function(response) {
+                $scope.users = response.data;
+            })
+            .catch(function(response) {
+                console.log(response);
+            })
+        ;
+        $http.get('/dialogsList')
+            .then(function(response) {
+                $scope.chats = response.data;
+            })
+            .catch(function(response) {
+                console.log(response);
+            })
+        ;
 
         $scope.submitUser = function() {
             var req = {userSelect: $scope.userChat};
 
-            $http.post('/sendSelectUser', req)
-                .then(
-                    console.log("Ok")
-                );
+            $http.post('/sendSelectUser', req);
         };
 
         $scope.submit = function() {
@@ -45,20 +49,14 @@
                 })
                 .catch(function (response) {
                     console.log(response);
-                });
+                })
+            ;
         };
 
-        $http.get('/usersActivity')
-            .then(function(response) {
-                $scope.users = response.data;
-                console.log($scope.users);
-            })
-            .catch(function(response) {
-                console.log(response);
-            });
-
         function listChatMessages() {
-            return $http.get('/dataFromDataBase')
+            var reqUrl = window.location.search || '';
+            console.log(reqUrl);
+            return $http.get('/dataFromDataBase' + reqUrl)
                 .then(function(response) {
                     $scope.usersMessage = response.data;
                 });

@@ -33,17 +33,17 @@
                     <div class="form-group">
                         <select class="form-control" ng-model="userChat" id="Users">
                             <option value="" disabled selected>Write to...</option>
-                            <option ng-repeat="user in users">{{user.name}}</option>
+                            <option ng-repeat="(login, user) in users" value="{{login}}">{{user.name}}</option>
                         </select>
                         <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
                     </div>
                 </form>
                 <p class="lead">Users</p>
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="dialoge in testMassive">
-                        <a href="#">
-                            <span class="badge">{{dialoge.notread}}</span>
-                            <em ng-repeat="(key, value) in dialoge.paricipants"> {{value}}</em>
+                    <li class="list-group-item" ng-repeat="dialog in chats">
+                        <a ng-href={{'?chat='+dialog.id}}>
+                            <span class="badge"">{{dialog.notread}}</span>
+                            <em ng-repeat="value in dialog.partisipants">{{value}} </em>
                             <span class="glyphicon glyphicon-envelope messegeLabel"></span>
                         </a>
                     </li>
