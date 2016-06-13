@@ -22,8 +22,8 @@
                                  paricipants: ["nata", "alex"],
                                  notread: 10
                                  },
-                               2: {
-                                 paricipants: ["kirill", "alex"],
+                              2: {
+                             paricipants: ["kirill", "alex"],
                                  notread: 5
                                  }
                              };
@@ -56,6 +56,7 @@
             .catch(function(response) {
                 console.log(response);
             });
+    };
 
         function listChatMessages() {
             return $http.get('/dataFromDataBase')
