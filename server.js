@@ -4,9 +4,15 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
 var busboy = require('connect-busboy');
+var qsql = require('q-sqlite3');
 var Storage = require('./json-storage.js');
 
 var userStorage = new Storage('./users.json');
+var db = null;
+
+qsql.createDatabase('./db/chat').done(function(database) {
+    db = database;
+});
 
 var app = express();
 app.use(busboy());
@@ -153,6 +159,18 @@ app.get('/usersActivity', function(req, res) {
     res.send(usersActivity);
 });
 
+app.get('/dialogsList', function(req, res) {
+    if (!req.session.loggedUser) {
+        res.send({error: 'not logged in'});
+        return;
+    }
+
+    getUserDialogList(req.session.loggedUser.login)
+    .then(function(data) {
+        res.send(JSON.stringify(data, null, "    "));
+    });
+});
+
 var server = app.listen(8081, 'localhost', function() {
     var host = server.address().address;
     var port = server.address().port;
@@ -171,4 +189,58 @@ function setCurrentUserTime(loggedUser) {
     var newObjUser = userStorage.findByKey(loggedUser.login);
     newObjUser.lastActivity = curenlyTime;
     userStorage.update(newObjUser, loggedUser.login);
+}
+
+function getUserDialogList(login) {
+    var selectDialogsList = "SELECT Chats.id, Chat_partisipants.lastVisit FROM Chat_partisipants, Chats " +
+        "WHERE Chats.id=Chat_partisipants.chatId AND Chat_partisipants.userLogin= '" + login + "' ORDER BY Chats.lastMessTime";
+    var dialogs;
+
+    return db.all(selectDialogsList)
+    .then(function(rows) {
+        var countMessPromises = [];
+        var selectPartisipantsPromises = [];
+        dialogs = rows;
+
+        for (var i = 0; i < rows.length; i++) {
+            var selectCountMess = "SELECT chatId, count(message) FROM Messages WHERE sentAtTime > " + rows[i].lastVisit + " AND chatId = " + rows[i].id + ";";
+            countMessPromises.push(db.get(selectCountMess));
+
+            var selectPartisipants = "SELECT chatId, userLogin FROM Chat_partisipants WHERE chatId = " + rows[i].id + " AND userLogin <> '" + login + "';";
+            selectPartisipantsPromises.push(db.all(selectPartisipants));
+        }
+        return Promise.all([Promise.all(countMessPromises), Promise.all(selectPartisipantsPromises)]);
+    })
+    .then(function(res) {
+        var counts = res[0];
+        var partisipants = res[1];
+
+        for (var i = 0; i < dialogs.length; i++) {
+            for (var j = 0; j < counts.length; j++) {
+                if (dialogs[i].id === counts[j].chatId) {
+                    dialogs[i].notread = counts[j]["count(message)"];
+                    break;
+                } else {
+                    dialogs[i].notread = 0;
+                }
+            }
+            dialogs[i].partisipants = findPartisipants(partisipants, dialogs[i].id);
+        }
+        return (dialogs);
+    })
+    .catch(function(err) {
+        throw err;
+    });
+}
+
+function findPartisipants(partisipants, id) {
+    var partisipantsList = [];
+    for (var k = 0; k < partisipants.length; k++) {
+        for (var n = 0; n < partisipants[k].length; n++) {
+            if (partisipants[k][n].chatId === id) {
+                partisipantsList.push(partisipants[k][n].userLogin);
+            }
+        }
+    }
+    return partisipantsList;
 }
