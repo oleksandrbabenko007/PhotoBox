@@ -23,15 +23,15 @@
             $http.post('/sendSelectUser', req);
         };
 
-        $scope.submit = function () {
+        $scope.submit = function() {
             var userId = window.location.search;
             var arr = userId.split('=');
             var req = {idChat: arr[arr.length-1], message: $scope.text};
             $http.post('/sendMessage', req)
-                .then(function () {
+                .then(function() {
                     return listChatMessages();
                 })
-                .catch(function (response) {
+                .catch(function(response) {
                     console.log(response);
                 })
             ;
@@ -39,17 +39,17 @@
 
         $http.get('/dialogsList')
             .then(function(response) {
-                $scope.chats = response.data;
+                $scope.usersMassive = response.data;
+                console.log($scope.usersMassive);
+            })
+        ;
+
+        $http.get('/usersActivity')
+            .then(function(response) {
+                $scope.users = response.data;
             })
             .catch(function(response) {
                 console.log(response);
-            })
-        ;
-        
-        $http.get('/dialogsList')
-            .then(function (response) {
-                $scope.usersMassive = response.data;
-                console.log($scope.usersMassive);
             })
         ;
 

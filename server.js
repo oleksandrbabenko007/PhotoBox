@@ -192,7 +192,6 @@ app.post('/sendSelectUser', function(req, res) {
     res.end();
 });
 
-// todo sqlRequest
 app.get('/dataFromDataBase', function(req, res) {
     db.all("SELECT message, author, idMessage FROM Messages WHERE chatId=" + req.query.chat)
     .then(function(rows) {

@@ -43,7 +43,7 @@
                     <li class="list-group-item" ng-repeat="dialog in usersMassive">
                         <a ng-href={{"?chat="+dialog.id}}>
                             <span class="badge">{{dialog.notread}}</span>
-                            <em ng-repeat="value in dialog.partisipants">{{value}}</em>
+                            <em ng-repeat="value in dialog.partisipants">{{value}} </em>
                             <span class="glyphicon glyphicon-envelope messegeLabel"></span>
                         </a>
                     </li>
