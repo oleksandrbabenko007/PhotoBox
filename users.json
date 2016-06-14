@@ -13,21 +13,42 @@
             "status": "Phrase with some philosophical sense",
             "avatar": "users_images\\nata\\картинка.jpg",
             "images": "/users_images/nata/pictures.json",
-            "lastActivity": 1464183262182
+            "lastActivity": 1465909317939
         },
         "sasha": {
             "password": "sasha",
             "name": "Alexsander",
             "avatar": "\\users_images\\sasha\\fyyOO93cvFg.jpg",
             "images": "/users_images/sasha/pictures.json",
-            "lastActivity": 1464183380361
+            "lastActivity": 1465909452792
         },
-        "user": {
+        "kirill": {
             "password": "123",
-            "name": "Some User",
+            "name": "Kirill",
             "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
             "images": "/users_images/user/pictures.json",
-            "lastActivity": 1464183294102
+            "lastActivity": 1465909394604
+        },
+        "alex": {
+            "password": "123",
+            "name": "Alex",
+            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
+            "images": "/users_images/user/pictures.json",
+            "lastActivity": 1465909394604
+        },
+        "masha": {
+            "password": "123",
+            "name": "Maria",
+            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
+            "images": "/users_images/user/pictures.json",
+            "lastActivity": 1465909394604
+        },
+        "anna": {
+            "password": "123",
+            "name": "Night-fly",
+            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
+            "images": "/users_images/user/pictures.json",
+            "lastActivity": 1465909394604
         }
     },
     "lastId": 0
