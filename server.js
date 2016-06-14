@@ -76,7 +76,6 @@ app.post('/fileupload', function(req, res) {
     var fstream;
 
     req.busboy.on('file', function(fieldname, file, filename) {
-
         pathDirect = path.join(pathToGallery, filename);
 
         fileName = encodeURIComponent(filename);
@@ -139,6 +138,10 @@ app.get('/logout', function(req, res) {
 });
 
 app.get('/usersActivity', function(req, res) {
+    if (!req.session.loggedUser) {
+        res.send({error: 'not logged in'});
+        return;
+    }
     var loggedUser = req.session.loggedUser;
     var usersActivity = {};
     var newDate = new Date().getTime();
@@ -172,18 +175,26 @@ app.get('/dialogsList', function(req, res) {
 });
 
 app.post('/sendMessage', function(req, res) {
+    if (!req.session.loggedUser) {
+        res.send({error: 'not logged in'});
+        return;
+    }
     var loggedUser = req.session.loggedUser;
     var sqlExpression = "INSERT INTO Messages (chatId, message, sentAtTime, author) VALUES (?, ?, ?, ?)";
 
     var id = req.body.idChat;
     var sentAtTime = new Date().getTime();
     var message = req.body.message;
-    var author = loggedUser.name;
+    var author = loggedUser.login;
 
     db.prepare(sqlExpression)
     .then(function(stmnt) {
         stmnt.run(id, message, sentAtTime, author);
         stmnt.finalize();
+    })
+    .then(function() {
+        updateUserLastVisitToChat(req.body.idChat, loggedUser.login);
+        res.redirect('back');
         res.end();
     });
 });
@@ -213,8 +224,10 @@ app.post('/startChat', function(req, res) {
 });
 
 app.get('/dataFromDataBase', function(req, res) {
+    var loggedUser = req.session.loggedUser;
     db.all("SELECT message, author, idMessage FROM Messages WHERE chatId=" + req.query.chat)
     .then(function(rows) {
+        updateUserLastVisitToChat(req.query.chat, loggedUser.login);
         res.type('json');
         res.send(rows);
     });
@@ -227,6 +240,10 @@ app.post('/deleteMessage', function(req, res) {
         stmt.finalize();
         res.end();
     });
+});
+
+app.get('/loginUser', function(req, res) {
+    res.send(req.session.loggedUser);
 });
 
 var server = app.listen(8081, 'localhost', function() {
@@ -247,6 +264,17 @@ function setCurrentUserTime(loggedUser) {
     var newObjUser = userStorage.findByKey(loggedUser.login);
     newObjUser.lastActivity = curenlyTime;
     userStorage.update(newObjUser, loggedUser.login);
+}
+
+function updateUserLastVisitToChat(chatId, login) {
+    var time = new Date().getTime();
+    var statement = "UPDATE Chat_partisipants SET lastVisit = " + time +
+        " WHERE chatId = " + chatId + " AND userLogin = '" + login + "'";
+    db.run(statement)
+        .catch(function(req) {
+            console.log(req);
+        })
+    ;
 }
 
 function starDialog(userSelect, loggedUser) {

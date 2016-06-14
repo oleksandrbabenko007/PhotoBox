@@ -14,7 +14,6 @@ body {
 
 .wrapSent{
     position: relative;
-
 }
 
 .btnSent{
@@ -25,19 +24,11 @@ body {
 }
 
 .messegeLabel{
-float: right;
-margin-right: 15px;
+    float: right;
+    margin-right: 15px;
 }
 
-.deleteMessage{
- float: right;
-}
- div>h5 {
-     width: 90%;
-     float: left;
- }
-
-.showString:hover  {
+.showString h5:hover{
     cursor: pointer;
     opacity: 0.5;
 }
@@ -45,4 +36,38 @@ margin-right: 15px;
 .windowChat{
     height: 500px;
     overflow-y: scroll;
+}
+h2 {
+    color: #fff;
+    margin: 5px 0 10px;
+}
+
+textarea.col-xs-10 {
+    max-width: 83.3%;
+}
+
+.showString.mymess h5 {
+    background: #add5ff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 0;
+    float: left;
+}
+
+.showString h5 {
+    display: inline-block;
+    float: right;
+    margin: 5px 0;
+    padding: 5px 10px;
+    line-height: 1.5em;
+
+    background: #fff0d2;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+span.glyphicon-remove {
+    font-size: 10px;
+    padding: 5px;
 }
