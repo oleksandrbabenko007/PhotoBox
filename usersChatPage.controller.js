@@ -20,7 +20,7 @@
 
         $scope.submitUser = function() {
             var req = {userSelect: $scope.userChat};
-            $http.post('/sendSelectUser', req);
+            $http.post('/startChat', req);
         };
 
         $scope.submit = function() {

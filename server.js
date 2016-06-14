@@ -188,8 +188,28 @@ app.post('/sendMessage', function(req, res) {
     });
 });
 
-app.post('/sendSelectUser', function(req, res) {
-    res.end();
+app.post('/startChat', function(req, res) {
+    var loggedUser = req.session.loggedUser;
+    starDialog(req.body.userSelect, loggedUser)
+        .then(function(rows) {
+            if (rows !== undefined) {
+                res.send({idChat: rows.chatId});
+            } else {
+                var sqlRequest = "INSERT INTO Chats (id, lastMessTime) VALUES ( ?, ?)";
+                var time = new Date().getTime();
+                db.run(sqlRequest, null, time)
+                    .then(function(statement) {
+                        return statement.lastID;
+                    })
+                    .then(function(lastID) {
+                        var timeNow = new Date().getTime();
+                        var sqlRequestCP = "INSERT INTO Chat_partisipants (chatId, userLogin, lastVisit) VALUES (?, ?, ?)";
+                        db.run(sqlRequestCP, lastID, req.body.userSelect, timeNow);
+                        db.run(sqlRequestCP, lastID, loggedUser.login, timeNow);
+                        res.send({idChat: lastID});
+                    });
+            }
+        });
 });
 
 app.get('/dataFromDataBase', function(req, res) {
@@ -227,6 +247,28 @@ function setCurrentUserTime(loggedUser) {
     var newObjUser = userStorage.findByKey(loggedUser.login);
     newObjUser.lastActivity = curenlyTime;
     userStorage.update(newObjUser, loggedUser.login);
+}
+
+function starDialog(userSelect, loggedUser) {
+    return db.all("SELECT chatId FROM Chat_partisipants WHERE userLogin= '" + userSelect + "'")
+        .then(function(rows) {
+            var idValues = [];
+            for (var i = 0; i < rows.length; i++) {
+                idValues[i] = rows[i].chatId;
+            }
+            var selectId = idValues.join(',');
+            var countUser = "SELECT chatId, count(userLogin) AS cnt FROM Chat_partisipants WHERE chatId IN (" + selectId + ") GROUP BY chatId HAVING cnt=2";
+            return db.all(countUser);
+        })
+        .then(function(rows) {
+            var idValues = [];
+            for (var i = 0; i < rows.length; i++) {
+                idValues[i] = rows[i].chatId;
+            }
+            var strForReques = idValues.join(',');
+            var selectId = "SELECT chatId FROM Chat_partisipants WHERE chatId IN (" + strForReques + ") AND userLogin= '" + loggedUser.login + "'";
+            return db.get(selectId);
+        });
 }
 
 function getUserDialogList(login) {

@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <select class="form-control" ng-model="userChat" id="Users">
                             <option value="" disabled selected>Write to...</option>
-                            <option ng-repeat="user in users">{{user.name}}</option>
+                            <option value="{{key}}" ng-repeat="(key, user) in users">{{user.name}}</option>
                         </select>
                         <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
                     </div>
