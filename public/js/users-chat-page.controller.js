@@ -33,9 +33,6 @@
         };
 
         $scope.submit = function() {
-            var elem = document.getElementById('textClear');
-            elem.value = '';
-            console.log(elem);
             var userId = window.location.search;
             var arr = userId.split('=');
             var req = {idChat: arr[arr.length - 1], message: $scope.text};
@@ -51,6 +48,7 @@
                     console.log(response);
                 })
             ;
+            $scope.text = "";
         };
 
         function updateDialogList() {

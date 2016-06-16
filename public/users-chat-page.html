@@ -59,12 +59,11 @@
                             <span class="glyphicon glyphicon-remove deleteMessage" ng-show="isMyMessage(value.author)" ng-click="deleteMessage($event, value.idMessage)"></span>
                             <strong>{{value.author}} : </strong> {{value.message}}
                         </h5>
-
                     </div>
                 </div>
                 <form class="form-signin" ng-keypress="($event.which === 13)? submit():0" ng-submit="submit()">
                     <div class="thumbnail wrapSent clearfix">
-                        <textarea id="textClear" ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4" ng-disabled="tab == ''"></textarea>
+                        <textarea  ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4" ng-disabled="tab == ''"></textarea>
                         <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" ng-disabled="tab == ''"/>
                     </div>
                 </form>

@@ -15,7 +15,8 @@
     "express": "4.2.x",
     "file-exists": "*",
     "mkdirp": "*",
-    "q-sqlite3": "*"
+    "q-sqlite3": "*",
+    "underscore": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
