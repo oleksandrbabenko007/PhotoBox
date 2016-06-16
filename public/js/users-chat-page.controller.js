@@ -33,6 +33,9 @@
         };
 
         $scope.submit = function() {
+            var elem = document.getElementById('textClear');
+            elem.value = '';
+            console.log(elem);
             var userId = window.location.search;
             var arr = userId.split('=');
             var req = {idChat: arr[arr.length - 1], message: $scope.text};
@@ -104,7 +107,7 @@
             var arr = userId.split('=');
             $scope.tab = arr[arr.length - 1];
             return $scope.tab;
-        };
+        }
     }
 })();
 

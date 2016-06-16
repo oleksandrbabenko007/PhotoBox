@@ -37,10 +37,10 @@
                             <option value="" disabled selected>Write to...</option>
                             <option value="{{key}}" ng-repeat="(key, user) in users">{{user.name}}</option>
                         </select>
-                        <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
+                        <button class="btn btn-primary btnSentUser" type="submit">Create Dialog</button>
                     </div>
                 </form>
-                <p class="lead">Users</p>
+                <p class="lead">Dialogs</p>
                 <ul class="list-group">
                     <li ng-class="{activeChatStyle: tab == dialog.id}" class="list-group-item" ng-repeat="dialog in usersMassive">
                         <a ng-href={{"?chat="+dialog.id}}>
@@ -62,9 +62,9 @@
 
                     </div>
                 </div>
-                <form class="form-signin" ng-submit="submit()">
+                <form class="form-signin" ng-keypress="($event.which === 13)? submit():0" ng-submit="submit()">
                     <div class="thumbnail wrapSent clearfix">
-                        <textarea ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4" ng-disabled="tab == ''"></textarea>
+                        <textarea id="textClear" ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4" ng-disabled="tab == ''"></textarea>
                         <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" ng-disabled="tab == ''"/>
                     </div>
                 </form>
