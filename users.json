@@ -3,52 +3,52 @@
         "admin": {
             "password": "admin",
             "name": "Administrator",
-            "avatar": "users_images\\admin\\картинка.jpg",
+            "avatar": "/users_images/admin/8fa7KMFG66A.jpg",
             "images": "/users_images/admin/pictures.json",
-            "lastActivity": 1464183228981
+            "lastActivity": 1465999971690
         },
         "nata": {
             "password": "123",
             "name": "Nataly SomeSurname",
             "status": "Phrase with some philosophical sense",
-            "avatar": "users_images\\nata\\картинка.jpg",
+            "avatar": "/users_images/nata/8fa7KMFG66A.jpg",
             "images": "/users_images/nata/pictures.json",
-            "lastActivity": 1465909317939
+            "lastActivity": 1466002847519
         },
         "sasha": {
             "password": "sasha",
             "name": "Alexsander",
-            "avatar": "\\users_images\\sasha\\fyyOO93cvFg.jpg",
+            "avatar": "",
             "images": "/users_images/sasha/pictures.json",
             "lastActivity": 1465909452792
         },
         "kirill": {
             "password": "123",
             "name": "Kirill",
-            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
-            "images": "/users_images/user/pictures.json",
-            "lastActivity": 1465909394604
+            "avatar": "/users_images/kirill/8fa7KMFG66A.jpg",
+            "images": "/users_images/kirill/pictures.json",
+            "lastActivity": 1466002383572
         },
         "alex": {
             "password": "123",
             "name": "Alex",
-            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
-            "images": "/users_images/user/pictures.json",
+            "avatar": "",
+            "images": "/users_images/alex/pictures.json",
             "lastActivity": 1465909394604
         },
         "masha": {
             "password": "123",
             "name": "Maria",
-            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
-            "images": "/users_images/user/pictures.json",
+            "avatar": "",
+            "images": "/users_images/masha/pictures.json",
             "lastActivity": 1465909394604
         },
         "anna": {
             "password": "123",
             "name": "Night-fly",
-            "avatar": "users_images\\user\\hiiO-E3jkgQ.jpg",
-            "images": "/users_images/user/pictures.json",
-            "lastActivity": 1465909394604
+            "avatar": "/users_images/anna/8fa7KMFG66A.jpg",
+            "images": "/users_images/anna/pictures.json",
+            "lastActivity": 1466002807511
         }
     },
     "lastId": 0

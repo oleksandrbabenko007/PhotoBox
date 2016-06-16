@@ -1,0 +1,23 @@
+{
+    "data": {
+        "1": {
+            "src": "users_images\\nata\\1.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "2": {
+            "src": "users_images\\nata\\2.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "5": {
+            "src": "/users_images/nata/3.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
+    },
+    "lastId": 5
+}

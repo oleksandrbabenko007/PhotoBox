@@ -1,6 +1,7 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
+var mkdirp = require('mkdirp');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
 var busboy = require('connect-busboy');
@@ -20,7 +21,8 @@ app.use(session({
     cookieName: 'session',
     secret: 'nata_hin'
 }));
-app.use(express.static('.'));
+app.use(express.static('public'));
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -46,11 +48,16 @@ app.post('/changeAvatar', function(req, res) {
     var fstream;
 
     req.busboy.on('file', function(fieldname, file, filename) {
-        var avatarPath = path.join(__dirname, 'users_images', loggedUser.login, filename);
+        var avatarPath = path.join(__dirname, 'public', 'users_images', loggedUser.login, filename);
+
+        mkdirp(path.dirname(avatarPath), function(err) {
+            if (err) { throw err; }
+        });
+        
         fstream = fs.createWriteStream(avatarPath);
         file.pipe(fstream);
 
-        loggedUser.avatar = path.join('users_images', loggedUser.login, filename);
+        loggedUser.avatar = path.join('/users_images', loggedUser.login, filename);
         var updUser = userStorage.findByKey(loggedUser.login);
         updUser.avatar = loggedUser.avatar;
         userStorage.update(updUser, loggedUser.login);
@@ -66,12 +73,12 @@ app.post('/changeAvatar', function(req, res) {
 app.post('/fileupload', function(req, res) {
     var loggedUser = req.session.loggedUser;
 
-    var pathToPrictureJson = path.join(__dirname, 'users_images', loggedUser.login, 'pictures.json');
+    var pathToPrictureJson = path.join(__dirname, 'public', 'users_images', loggedUser.login, 'pictures.json');
     var imagesJson = new Storage(pathToPrictureJson);
 
     var fields = {};
     var pathDirect;
-    var pathToGallery = path.join(__dirname, 'users_images', loggedUser.login);
+    var pathToGallery = path.join(__dirname, 'public', 'users_images', loggedUser.login);
     var fileName;
     var fstream;
 
@@ -92,7 +99,7 @@ app.post('/fileupload', function(req, res) {
 
     req.busboy.on('finish', function() {
         var newPhoto = {};
-        newPhoto.src = path.join('users_images', loggedUser.login, fileName);
+        newPhoto.src = path.join('/users_images', loggedUser.login, fileName);
         newPhoto.descr = fields.fotoDescribe;
         newPhoto.category = fields.categoryName;
         newPhoto.private = fields.privateFoto ? true : false;
@@ -105,7 +112,7 @@ app.post('/fileupload', function(req, res) {
 app.post('/remove_photo', function(req, res) {
     var loggedUser = req.session.loggedUser;
     var remPhotoID = req.body.id;
-    var pathToPrictureJson = path.join(__dirname, 'users_images', loggedUser.login, 'pictures.json');
+    var pathToPrictureJson = path.join(__dirname, 'public', 'users_images', loggedUser.login, 'pictures.json');
     var imagesJson = new Storage(pathToPrictureJson);
     imagesJson.delete(remPhotoID);
     setCurrentUserTime(loggedUser);

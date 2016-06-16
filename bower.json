@@ -2,6 +2,7 @@
   "name": "photo-box",
   "description": "PhotoBox",
   "main": "index.html",
+  "directory": "./public/",
   "authors": [
     "aleksandrbabenko <oleksandr.o.babenko@globallogic.com>"
   ],

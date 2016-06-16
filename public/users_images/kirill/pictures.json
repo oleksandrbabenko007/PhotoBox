@@ -1,0 +1,17 @@
+{
+    "data": {
+        "1": {
+            "src": "/users_images/kirill/E9NghNcycm4.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "2": {
+            "src": "/users_images/kirill/ABlPLpxJ1vE.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
+    },
+    "lastId": 2
+}

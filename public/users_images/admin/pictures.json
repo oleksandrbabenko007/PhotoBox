@@ -1,0 +1,23 @@
+{
+    "data": {
+        "947": {
+            "src": "users_images\\admin\\2.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "948": {
+            "src": "users_images\\admin\\3.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        },
+        "9481": {
+            "src": "users_images\\admin\\4.jpg",
+            "descr": "",
+            "category": "category1",
+            "private": false
+        }
+    },
+    "lastId": "9481"
+}

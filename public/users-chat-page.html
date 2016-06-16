@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/users-chat-page-style.css">
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script src="js/photo-box.module.js"></script>
+    <script src="js/users-chat-page.controller.js"></script>
+</head>
+<body ng-app="photo-box" ng-controller="usersChatPageController">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-3">
+                    <a class="navbar-brand" href="/userpage.html">PhotoBox</a>
+                </div>
+                <div class="col-xs-7">
+                    <h2>{{user.name}}</h2>
+                </div>
+                <div class="col-xs-2">
+                    <a class="glyphicon glyphicon-off navbar-brand" href="/userpage.html"></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" >
+
+        <div class="row">
+            <div class="col-md-3">
+                <form class="form-signin" ng-submit="submitUser()" >
+                    <div class="form-group">
+                        <select class="form-control" ng-model="userChat" id="Users">
+                            <option value="" disabled selected>Write to...</option>
+                            <option value="{{key}}" ng-repeat="(key, user) in users">{{user.name}}</option>
+                        </select>
+                        <button class="btn btn-primary btnSentUser" type="submit">Create Dialogs...</button>
+                    </div>
+                </form>
+                <p class="lead">Users</p>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="dialog in usersMassive">
+                        <a ng-href={{"?chat="+dialog.id}}>
+                            <span class="badge">{{dialog.notread}}</span>
+                            <em ng-repeat="value in dialog.partisipants">{{value}} </em>
+                            <span class="glyphicon glyphicon-envelope messegeLabel"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-9">
+                <div class="thumbnail windowChat">
+                    <div ng-repeat="(key, value) in usersMessage" class="clearfix showString" ng-class="{mymess: isMyMessage(value.author)}">
+                        <h5>
+                            <span class="glyphicon glyphicon-remove deleteMessage" ng-show="isMyMessage(value.author)" ng-click="deleteMessage($event, value.idMessage)"></span>
+                            <strong>{{value.author}} : </strong> {{value.message}}
+                        </h5>
+
+                    </div>
+                </div>
+                <form class="form-signin" ng-submit="submit()">
+                    <div class="thumbnail wrapSent clearfix">
+                        <textarea ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4"></textarea>
+                        <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

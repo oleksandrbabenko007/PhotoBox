@@ -1,0 +1,6 @@
+<li class="list-group-item" ng-repeat="(key, user) in users">
+    <a ng-href={{'?user='+key}}>
+        {{user.name}}
+        <span class="green-circle" ng-if="user.online"></span>   <!-- ng-show, ng-hide -->
+    </a>
+</li>
