@@ -9,7 +9,7 @@ $(function() {
 
     $.get('/user_page' + url, function(response) {
         if (response.error || !response) {
-            window.location.href = '/public/index.html';
+            window.location.href = '/index.html';
             return;
         }
         var res = response[0];

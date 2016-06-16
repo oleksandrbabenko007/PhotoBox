@@ -30,6 +30,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+    if (req.url !== '/login' && !req.session.loggedUser) {
+        res.send({error: 'not logged in'});
+        return;
+    }
+    next();
+});
+
 app.post('/login', function(req, res) {
     var user = req.body.credentials;
 
@@ -55,7 +63,6 @@ app.post('/changeAvatar', function(req, res) {
         mkdirp(path.dirname(avatarPath), function(err) {
             if (err) { throw err; }
         });
-        
         fstream = fs.createWriteStream(avatarPath);
         file.pipe(fstream);
 
@@ -123,10 +130,6 @@ app.post('/remove_photo', function(req, res) {
 
 app.get('/user_page', function(req, res) {
     var loggedUser = req.session.loggedUser;
-    if (!req.session.loggedUser) {
-        res.send({error: 'not logged in'});
-        return;
-    }
     if (req.query.user) {
         if ((userStorage.findByKey(req.query.user) === false) || (req.query.user === loggedUser.login)) {
             res.send([loggedUser, true]);
@@ -147,10 +150,6 @@ app.get('/logout', function(req, res) {
 });
 
 app.get('/usersActivity', function(req, res) {
-    if (!req.session.loggedUser) {
-        res.send({error: 'not logged in'});
-        return;
-    }
     var loggedUser = req.session.loggedUser;
     var usersActivity = {};
     var newDate = new Date().getTime();
@@ -172,11 +171,6 @@ app.get('/usersActivity', function(req, res) {
 });
 
 app.get('/dialogsList', function(req, res) {
-    if (!req.session.loggedUser) {
-        res.send({error: 'not logged in'});
-        return;
-    }
-
     getUserDialogList(req.session.loggedUser.login)
     .then(function(data) {
         res.send(JSON.stringify(data, null, "    "));
@@ -184,10 +178,6 @@ app.get('/dialogsList', function(req, res) {
 });
 
 app.post('/sendMessage', function(req, res) {
-    if (!req.session.loggedUser) {
-        res.send({error: 'not logged in'});
-        return;
-    }
     var loggedUser = req.session.loggedUser;
     var sqlExpression = "INSERT INTO Messages (chatId, message, sentAtTime, author) VALUES (?, ?, ?, ?)";
 
