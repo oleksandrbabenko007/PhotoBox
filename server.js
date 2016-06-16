@@ -7,6 +7,8 @@ var session = require('client-sessions');
 var busboy = require('connect-busboy');
 var qsql = require('q-sqlite3');
 var Storage = require('./json-storage.js');
+var _ = require('underscore');
+
 
 var userStorage = new Storage('./users.json');
 var db = null;
@@ -287,20 +289,12 @@ function updateUserLastVisitToChat(chatId, login) {
 function starDialog(userSelect, loggedUser) {
     return db.all("SELECT chatId FROM Chat_partisipants WHERE userLogin= '" + userSelect + "'")
         .then(function(rows) {
-            var idValues = [];
-            for (var i = 0; i < rows.length; i++) {
-                idValues[i] = rows[i].chatId;
-            }
-            var selectId = idValues.join(',');
+            var selectId = _.pluck(rows, 'chatId').join(',');
             var countUser = "SELECT chatId, count(userLogin) AS cnt FROM Chat_partisipants WHERE chatId IN (" + selectId + ") GROUP BY chatId HAVING cnt=2";
             return db.all(countUser);
         })
         .then(function(rows) {
-            var idValues = [];
-            for (var i = 0; i < rows.length; i++) {
-                idValues[i] = rows[i].chatId;
-            }
-            var strForReques = idValues.join(',');
+            var strForReques = _.pluck(rows, 'chatId').join(',');
             var selectId = "SELECT chatId FROM Chat_partisipants WHERE chatId IN (" + strForReques + ") AND userLogin= '" + loggedUser.login + "'";
             return db.get(selectId);
         });

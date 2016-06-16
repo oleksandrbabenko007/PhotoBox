@@ -42,7 +42,7 @@
                 </form>
                 <p class="lead">Users</p>
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="dialog in usersMassive">
+                    <li ng-class="{activeChatStyle: tab == dialog.id}" class="list-group-item" ng-repeat="dialog in usersMassive">
                         <a ng-href={{"?chat="+dialog.id}}>
                             <span class="badge">{{dialog.notread}}</span>
                             <em ng-repeat="value in dialog.partisipants">{{value}} </em>

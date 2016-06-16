@@ -16,6 +16,7 @@
         activate();
 
         function activate() {
+            activeChat();
             listChatMessages();
             $interval(listChatMessages, 1000);
             updateDialogList();
@@ -95,5 +96,12 @@
         function isMyMessage(author) {
             return author === $scope.user.login;
         }
+
+        function activeChat() {
+            var userId = window.location.search;
+            var arr = userId.split('=');
+            $scope.tab = arr[arr.length - 1];
+            return $scope.tab;
+        };
     }
 })();
