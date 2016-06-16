@@ -9,7 +9,6 @@ var qsql = require('q-sqlite3');
 var Storage = require('./json-storage.js');
 var _ = require('underscore');
 
-
 var userStorage = new Storage('./users.json');
 var db = null;
 

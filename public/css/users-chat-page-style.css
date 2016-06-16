@@ -37,6 +37,12 @@ body {
     height: 500px;
     overflow-y: scroll;
 }
+
+.textHeader{
+    padding: 25%;
+    text-align: center;
+}
+
 h2 {
     color: #fff;
     margin: 5px 0 10px;

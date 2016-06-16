@@ -54,6 +54,7 @@
 
             <div class="col-md-9">
                 <div class="thumbnail windowChat">
+                    <div class="textHeader" ng-show=" tab == '' "><h1>Choose dialog, please...</h1></div>
                     <div ng-repeat="(key, value) in usersMessage" class="clearfix showString" ng-class="{mymess: isMyMessage(value.author)}">
                         <h5>
                             <span class="glyphicon glyphicon-remove deleteMessage" ng-show="isMyMessage(value.author)" ng-click="deleteMessage($event, value.idMessage)"></span>
@@ -64,8 +65,8 @@
                 </div>
                 <form class="form-signin" ng-submit="submit()">
                     <div class="thumbnail wrapSent clearfix">
-                        <textarea ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4"></textarea>
-                        <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" />
+                        <textarea ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4" ng-disabled="tab == ''"></textarea>
+                        <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit" ng-disabled="tab == ''"/>
                     </div>
                 </form>
             </div>
