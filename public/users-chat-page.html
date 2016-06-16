@@ -51,9 +51,8 @@
                     </li>
                 </ul>
             </div>
-
             <div class="col-md-9">
-                <div class="thumbnail windowChat">
+                <div class="thumbnail windowChat" id="autoscroll">
                     <div class="textHeader" ng-show=" tab == '' "><h1>Choose dialog, please...</h1></div>
                     <div ng-repeat="(key, value) in usersMessage" class="clearfix showString" ng-class="{mymess: isMyMessage(value.author)}">
                         <h5>

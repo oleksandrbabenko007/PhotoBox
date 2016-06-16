@@ -12,6 +12,7 @@
         $scope.deleteMessage = deleteMessage;
         $scope.isMyMessage = isMyMessage;
         $scope.user = {};
+        var scroller = document.getElementById("autoscroll");
 
         activate();
 
@@ -37,9 +38,9 @@
             var req = {idChat: arr[arr.length - 1], message: $scope.text};
             $http.post('/sendMessage', req)
                 .then(function(res) {
-                    if (res.data.error) { 
+                    if (res.data.error) {
                         alert("You are not logged in!");
-                        return; 
+                        return;
                     }
                     return listChatMessages();
                 })
@@ -78,6 +79,7 @@
 
         function listChatMessages() {
             var reqUrl = window.location.search || '';
+            scroller.scrollTop = scroller.scrollHeight;
             return $http.get('/dataFromDataBase' + reqUrl)
                 .then(function(response) {
                     $scope.usersMessage = response.data;
@@ -105,3 +107,4 @@
         };
     }
 })();
+
