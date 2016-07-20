@@ -22,7 +22,6 @@
         }
 
         $scope.submit = function() {
-            console.log("chatId:   " + $stateParams.chatId);
             var req = {idChat: $stateParams.chatId, message: $scope.text};
             $http.post('/sendMessage', req)
                 .then(function(res) {

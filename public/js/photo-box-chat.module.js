@@ -20,20 +20,18 @@
                     }
                 }
             })
-            .state('index.dialogs', {
+            .state('dialogs', {
                 url: "/chat/:chatId",
                 views: {
-                    "message-list@": {
+                    "dialog-list": {
+                        templateUrl: "dialogs-list.html",
+                        controller: 'dialogListController'
+                    },
+                    "message-list": {
                         templateUrl: "message-list.html",
                         controller: 'messageListController'
                     }
                 }
-                // onEnter: function() {
-                //     console.log("enter");
-                // },
-                // onExit: function() {
-                //     console.log("exit");
-                // }
             });
     }
 })();
