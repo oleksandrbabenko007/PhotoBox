@@ -221,11 +221,11 @@ app.post('/startChat', function(req, res) {
         });
 });
 
-app.get('/dataFromDataBase', function(req, res) {
+app.post('/dataFromDataBase', function(req, res) {
     var loggedUser = req.session.loggedUser;
-    db.all("SELECT message, author, idMessage FROM Messages WHERE chatId=" + req.query.chat)
+    db.all("SELECT message, author, idMessage FROM Messages WHERE chatId=" + req.body.idChat)
     .then(function(rows) {
-        updateUserLastVisitToChat(req.query.chat, loggedUser.login);
+        updateUserLastVisitToChat(req.body.idChat, loggedUser.login);
         res.type('json');
         res.send(rows);
     });

@@ -1,0 +1,14 @@
+<div class="thumbnail windowChat" id="autoscroll">
+    <div ng-repeat="(key, value) in usersMessage" class="clearfix showString" ng-class="{mymess: isMyMessage(value.author)}">
+        <h5>
+            <span class="glyphicon glyphicon-remove deleteMessage" ng-show="isMyMessage(value.author)" ng-click="deleteMessage(value.idMessage)"></span>
+            <strong>{{value.author}} : </strong> {{value.message}}
+        </h5>
+    </div>
+</div>
+<form class="form-signin" ng-keypress="($event.which === 13)? submit():0" ng-submit="submit()">
+    <div class="thumbnail wrapSent clearfix">
+        <textarea  ng-model="text" class="col-xs-10" name="" id="" cols="80" rows="4"></textarea>
+        <input class="btn btn-primary col-xs-2 btnSent" type="submit" id="submit" value="Submit"/>
+    </div>
+</form>
